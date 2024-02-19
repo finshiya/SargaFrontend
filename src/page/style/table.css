@@ -237,7 +237,7 @@ text-transform: capitalize;
             box-shadow: 0px 0px 6px 3px rgb(0 0 0 / 7%);
             top: 55px;
             right: 20px;
-            background-color: rgb(255, 255, 255);
+            background-color: rgb(252, 148, 148);
             padding: 18px;
             z-index: 10;
         }
@@ -253,9 +253,24 @@ text-transform: capitalize;
         .right-div .nav-close-btn{
         position: absolute;
         top: 2rem;
-        right: 31px;
+        right: 159px;
         }
     
     }
-    
-    
+
+
+    .date-div{
+        background-color: rgb(255, 255, 255);
+        position: absolute;
+        top: 50px;
+        right: 0px;
+        z-index: 1000;
+        padding: 30px;
+        box-shadow: 0px 0px 6px 3px rgb(0 0 0 / 7%);
+    }
+
+   .toggle-date-btn{
+    background: transparent;
+border: none;
+color: #949494;
+   }

@@ -28,40 +28,49 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-
-  
   const handleLogin = async () => {
-  try {
-    const response = await fetch("http://localhost:3000/users/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      const jwtToken = data.token;
-      await login(jwtToken);
-
-      toast.success("Login successful!"); // Uncomment this line
-
-      navigate("/dashboard");
-    } else {
-      console.log("Login failed");
-      toast.error("Login failed. Please check your credentials.", {
-        theme: "danger",
-        // color: "white",
-        position: "top-right",
+    try {
+      const response = await fetch("http://localhost:3000/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
       });
+  
+      if (response.ok) {
+        const userData = await response.json();
+        console.log("User data:", userData); // Log user data to see if it contains the role
+        const jwtToken = userData.token;
+  
+        // Store token and user role in localStorage
+        localStorage.setItem('token', jwtToken);
+        localStorage.setItem('role', userData.userType);
+  
+        // Update state using the login function
+        login(jwtToken, userData.userType);
+  
+        if (userData.userType === "admin") {
+          navigate("/dashboard");
+        } else {
+          navigate("/other-page");
+        }
+  
+        toast.success("Login successful!");
+      } else {
+        console.log("Login failed");
+        toast.error("Login failed. Please check your credentials.", {
+          theme: "light",
+          position: "top-right",
+        });
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
     }
-  } catch (error) {
-    console.error("Error during login:", error);
-  }
-};
-
-
+  };
+  
+  
+  
   return (
     <>
       <ToastContainer position="top-right" />

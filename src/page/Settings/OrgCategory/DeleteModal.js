@@ -7,7 +7,7 @@ import axios from 'axios';
 import '../../style/delete.css';
 import { Container } from 'react-bootstrap';
 
-const DeleteModal = ({getDatas,deleteclose, dlt,id}) => {
+const DeleteModal = ({getDatas,deleteclose, dlt,id, selectedName}) => {
 
     const [remove, setRemove] = useState(id)
 
@@ -28,24 +28,24 @@ const DeleteModal = ({getDatas,deleteclose, dlt,id}) => {
         setShow(false)
       }
 
-    const onDelete = (_id) => {
-      const response = axios.patch(`http://localhost:3000/orgCategory/${_id}`)
+
+      const onDelete = (_id) => {
+        axios.patch(`http://localhost:3000/orgCategory/${_id}`)
           .then(() => {
-            if (response.status === 200) {
-             
-        toast.success('Data successfully added', {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-          className: 'toast-message',
-        });
-              }
+            
+            toast.error('User Successfully Deleted !', {
+                  toastId: 'success',
+                  position: toast.POSITION.TOP_RIGHT,
+                  autoClose: 1000,
+                })
+              
             getDatas();
           })
           .catch((error) => {
             console.error('Error deleting data:', error);
+            toast.error("Error in deleting the user",{ autoClose: 1000 })
           });
       };
-    
 
 
 
@@ -59,7 +59,7 @@ const DeleteModal = ({getDatas,deleteclose, dlt,id}) => {
           </Modal.Header>
           <Modal.Body >
             <Container>
-            <p>Are you sure want to delete ?</p>
+            <p>Are you sure want to delete  <span style={{color:'red'}}>  {selectedName}</span>  ?  </p>
             </Container>
           </Modal.Body>
           <Modal.Footer>

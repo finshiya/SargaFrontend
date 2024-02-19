@@ -45,7 +45,7 @@
     border-top: none;
     cursor: pointer;
     position: relative;
-    width: calc(33.33% - 2px);
+    /* width: calc(33.33% - 2px); */
     box-sizing: border-box;
     /* font-weight: 600; */
     color: #bcbcbc;
@@ -58,8 +58,8 @@
     /* border: none;
     background: #94cff1;
     color: white; */
-    border-bottom: 2px solid #5bb6ea;
-    color: #5bb6ea;
+    border-bottom: 2px solid #000000;
+    color: #000000;
 }
 
 .contents{

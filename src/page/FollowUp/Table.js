@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import Datatable from 'react-data-table-component';
 import axios from 'axios';
@@ -13,21 +12,27 @@ import { faEdit, faEye, faTrash, faFilter,faSearch} from '@fortawesome/free-soli
 import DeleteModal from './DeleteModal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { FaBars, FaTimes } from "react-icons/fa";
+import { FaBars, FaTimes, FaCalendarAlt } from "react-icons/fa";
 import { useRef } from 'react';
 
 function Table() {
+  const [showDateOptions, setShowDateOptions] = useState(false);
+
+  const toggleDateOptions = () => {
+    setShowDateOptions(!showDateOptions);
+  };
   const [datas, setDatas] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredDatas, setFilteredDatas] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
+  const [selectedName, setSelectedName] = useState("");
   const [selectedDatas, setSelectedDatas] = useState(null);
   const [deleteModal,setDeleteModal] =useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [filterValue, setFilterValue] = useState(''); 
   const [query, setQuery] = useState(''); 
-  const navRef = useRef();  
+  const navRef = useRef(); 
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const showNavbar = () => {
@@ -87,6 +92,7 @@ const deleteModalShow = () => {
 const handleClickDelete = (row) => {
   setSelectedId(row._id);
   deleteModalShow();
+  setSelectedName(`${row.enqId.fName} ${row.enqId.lName}`);
 };
   const totalCount = filteredDatas.length;
 
@@ -200,7 +206,7 @@ const handleClickDelete = (row) => {
                 />
               </div>
             </div>
-
+<div style={{display:'flex', justifyContent:'flex-end', width:'100%', alignItem:'center'}}>
             <div ref={navRef} className='right-div'>
               <div className='inner-div'>
                 <div className='count-div me-2'>
@@ -210,32 +216,49 @@ const handleClickDelete = (row) => {
                 <div>
                   <Filter onFilter={(newQuery, newFilterValue) => { setQuery(newQuery); setFilterValue(newFilterValue); }} />
                 </div>
-                <div className="date-range-container">
-                  <label htmlFor="startDate">From:</label>
-                  <input
+               
+              </div>
+              <button className='nav-btn nav-close-btn' onClick={showNavbar}>
+                <FaTimes />
+              </button>
+            </div>
+          
+            <button className='nav-btn' onClick={showNavbar}>
+              <FaBars />
+            </button>
+
+            <button className='toggle-date-btn' onClick={toggleDateOptions}>
+                {showDateOptions ? <FaTimes /> :<FaCalendarAlt />} {/* Toggle between FaTimes and FaBars icons */}
+              </button>
+
+              
+              {showDateOptions && (
+                <div className="date-div" style={{display:'flex'}}>
+                  <div >
+                  <label htmlFor="startDate">From:</label><br></br>
+                   <input
                     type="date"
                     id="startDate"
                     value={startDate || ''}
                     onChange={(e) => setStartDate(e.target.value)}
                   />
-                  <label htmlFor="endDate">To:</label>
+                  </div>
+
+                  <div>
+               <label htmlFor="endDate">To:</label><br/>
                   <input
                     type="date"
                     id="endDate"
                     value={endDate || ''}
                     onChange={(e) => setEndDate(e.target.value)}
                   />
-                  <button onClick={() => getDatas()}>Apply</button>
+                 </div>
                 </div>
-              </div>
-              <button className='nav-btn nav-close-btn' onClick={showNavbar}>
-                <FaTimes />
-              </button>
+              )}
+                </div>
+           
             </div>
-            <button className='nav-btn' onClick={showNavbar}>
-              <FaBars />
-            </button>
-          </div>
+            
         }
         subHeaderAlign='right'
       />
@@ -248,7 +271,7 @@ const handleClickDelete = (row) => {
 
       {/* Modal for Viewing Details */}
       <ViewModal showModal={showViewModal} handleClose={handleClose} selectedDatas={selectedDatas} />
-      <DeleteModal deleteclose={deleteModalClose} dlt={deleteModal} id={selectedId} getDatas={getDatas} />
+      <DeleteModal deleteclose={deleteModalClose} dlt={deleteModal} id={selectedId} selectedName={selectedName} getDatas={getDatas} />
     </>
   );
 }

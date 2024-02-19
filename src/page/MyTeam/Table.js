@@ -28,6 +28,7 @@ function Table() {
   const [selectedDatas, setSelectedDatas] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
   const [deleteModal, setDeleteModal] = useState(false);
+  const [selectedName, setSelectedName] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("all");
   const [roleOptions, setRoleOptions] = useState([]);
   const [query, setQuery] = useState(''); 
@@ -35,19 +36,19 @@ function Table() {
     const showNavbar = () => {
     navRef.current.classList.toggle("responsive_nav");
 }
-  useEffect(() => {
-    const fetchUserRoles = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/userroles');
-        const roles = response.data.userRole.map(role => role.name);
-        setRoleOptions(['all', ...roles]);
-      } catch (error) {
-        console.error('Error fetching user roles:', error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchUserRoles = async () => {
+  //     try {
+  //       const response = await axios.get('http://localhost:3000/userroles');
+  //       const roles = response.data.userRole.map(role => role.name);
+  //       setRoleOptions(['all', ...roles]);
+  //     } catch (error) {
+  //       console.error('Error fetching user roles:', error);
+  //     }
+  //   };
 
-    fetchUserRoles();
-  }, []);
+  //   fetchUserRoles();
+  // }, []);
 
   const handleClose = () => {
     setShowEditModal(false);
@@ -66,35 +67,9 @@ function Table() {
   const handleClickDelete = (row) => {
     setSelectedId(row._id);
     deleteModalShow();
+    setSelectedName( `${row.fname} ${row.lname}`);
   };
 
-  // const getDatas = async () => {
-  //   try {
-  //     const response = await axios.get('http://localhost:3000/users');
-  //     const filteredData = response.data.users.filter(user => user.isDeleted === false || user.isDeleted === undefined);
-   
-  //     setDatas(filteredData);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-//   const capitalize = (str) => str ? str.charAt(0).toUpperCase() + str.slice(1).toLowerCase() : str;
-
-// const getDatas = async () => {
-//   try {
-//     const { users } = (await axios.get('http://localhost:3000/users')).data;
-//     const filteredData = users.map(({ fname, lname, ...rest }) => ({
-//       ...rest,
-//       fname: capitalize(fname),
-//       lname: capitalize(lname),
-//     })).filter(({ isDeleted }) => isDeleted === false || isDeleted === undefined);
-
-//     setDatas(filteredData);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// };
 
 const getDatas = async () => {
   try {
@@ -156,15 +131,17 @@ const getDatas = async () => {
     },
     {
       name: "USER ROLE",
-      selector: (row) => {
-        if (Array.isArray(row.userRoles)) {
-          return row.userRoles.map(userRole => userRole.name).join(', ');
-        } else if (row.userRoles && typeof row.userRoles === 'object') {
-          return row.userRoles.name;
-        } else {
-          return 'Unknown Role';
-        }
-      },
+      selector: (row) => row.userRoles,
+
+      // selector: (row) => {
+      //   if (Array.isArray(row.userRoles)) {
+      //     return row.userRoles.map(userRole => userRole.name).join(', ');
+      //   } else if (row.userRoles && typeof row.userRoles === 'object') {
+      //     return row.userRoles.name;
+      //   } else {
+      //     return 'Unknown Role';
+      //   }
+      // },
      
     },
     {
@@ -280,7 +257,7 @@ const getDatas = async () => {
       </div>
       <EditModal showModal={showEditModal} handleClose={handleClose} selectedDatas={selectedDatas} handleUpdate={handleUpdate} />
       <ViewModal showModal={showViewModal} handleClose={handleClose} selectedDatas={selectedDatas} />
-      <DeleteModal deleteclose={deleteModalClose} dlt={deleteModal} id={selectedId} getDatas={getDatas} />
+      <DeleteModal deleteclose={deleteModalClose} dlt={deleteModal} id={selectedId} selectedName={selectedName} getDatas={getDatas} />
     </>
   );
 }

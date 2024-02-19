@@ -8,7 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import * as Yup from 'yup';
 import ToggleButton from 'react-toggle-button';
-
+import { showSuccessAlert, showFailsAlert } from '../../Toastify/tostifyAlert';
 import '../../style/addmodel.css';
 import { Container } from 'react-bootstrap';
 
@@ -54,20 +54,21 @@ function AddModal({getDatas}) {
    
         const response = await axios.post('http://localhost:3000/enquirymode', values);
         // console.log('Response:', response.data);
-    
+        
         getDatas();
-        toast.success('Data successfully added', {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-          className: 'toast-message',
-        });
+       
+        // Show success toast message
+        toast.success("Successfully Added");
+    
 
         handleClose();
       } catch (error) {
         if (error.response) {
           console.log('Error Response:', error.response.data);
           console.log('Status Code:', error.response.status);
+          toast.error('Enquiry Mode Already Existed', error.response.status);
         } else if (error.request) {
+          toast.error('No response received from the server.');
           console.log('No response received from the server.');
         } else {
           toast.error('Error:', error.message);
@@ -78,7 +79,7 @@ function AddModal({getDatas}) {
 
   return (
     <>
-      <ToastContainer autoClose={50000} />
+ 
       <Button style={{ background: '#5bb6ea', border: 'none', color: 'white', fontWeight: '600', marginBottom:'10px' }} onClick={handleShow}>
         + New
       </Button>

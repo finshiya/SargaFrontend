@@ -1,16 +1,14 @@
-import React from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-import Table from './Table';
-
+import Table from "./Table";
 
 function index() {
   return (
     <div>
-
-      <Table/>
+      <Table />
     </div>
-  )
+  );
 }
 
-export default index
+export default index;

@@ -25,6 +25,7 @@ import { useRef } from 'react';
 
 
 function Table() {
+  const [selectedName, setSelectedName] = useState("");
   const [datas, setDatas] = useState([]);
   const [search, setSearch] = useState("");
   const [filteredDatas, setFilteredDatas] = useState([]);
@@ -49,6 +50,7 @@ navRef.current.classList.toggle("responsive_nav");
   const handleDeleteConfirmation = (row) => {
     setSelectedDatas(row);
     setShowDeleteModal(true);
+    
   };
 
   const handleDelete = async () => {
@@ -120,6 +122,7 @@ const deleteModalShow = () => {
 const handleClickDelete = (row) => {
   setSelectedId(row._id);
   deleteModalShow();
+  setSelectedName(row.name);
 };
   const totalCount = filteredDatas.length;
 
@@ -248,7 +251,7 @@ const handleClickDelete = (row) => {
 
 
        {/* Modal for Delete Confirmation */}
-       <DeleteModal deleteclose={deleteModalClose} dlt={deleteModal} id={selectedId} getDatas={getDatas} />
+       <DeleteModal deleteclose={deleteModalClose} dlt={deleteModal} id={selectedId} selectedName={selectedName} getDatas={getDatas} />
     </>
   );
 }

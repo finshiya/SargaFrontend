@@ -7,8 +7,9 @@ import '../../style/addmodel.css';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Container } from 'react-bootstrap';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { showSuccessAlert, showFailsAlert } from '../../Toastify/tostifyAlert';
 
 function AddModal({getDatas}) {
   const [show, setShow] = React.useState(false);
@@ -21,7 +22,7 @@ function AddModal({getDatas}) {
   // Validation schema using Yup
   const validationSchema = Yup.object({
     name: Yup.string().required('Name is required'),
-    descp: Yup.string().required('descp is required'),
+    descp: Yup.string().required('Description is required'),
   });
 
   const formik = useFormik({
@@ -39,25 +40,27 @@ function AddModal({getDatas}) {
       try {
         // Validate the newItem object using Formik and Yup
         await validationSchema.validate(values, { abortEarly: false });
-   
+    
         const response = await axios.post('http://localhost:3000/enquiryType', values);
-     
     
         getDatas();
-        toast.success('Data successfully added', {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-          className: 'toast-message',
-        });
-
+    
+        // Show success toast message
+        toast.success("Successfully Added");
+    
         handleClose();
       } catch (error) {
         if (error.response) {
           console.log('Error Response:', error.response.data);
           console.log('Status Code:', error.response.status);
+          // Show failure toast message
+          toast.error('Enquiry Source Already Existed', error.response.status);
         } else if (error.request) {
+          // Show failure toast message
+          toast.error('No response received from the server.');
           console.log('No response received from the server.');
         } else {
+          // Show failure toast message
           toast.error('Error:', error.message);
         }
       }

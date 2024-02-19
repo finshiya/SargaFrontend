@@ -17,3 +17,10 @@ margin-bottom: 20px;
 font-size: 17px;
 color: #000000cc;
 }
+.custom-disabled-input{
+    background-color: white !important;
+    margin-bottom: 14px;
+}
+.custom-disabled-input::-webkit-scrollbar {
+    width: 0; 
+}

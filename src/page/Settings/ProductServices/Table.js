@@ -34,6 +34,7 @@ function Table() {
   const [selectedId, setSelectedId] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [query, setQuery] = useState('');  
+  const [selectedName, setSelectedName] = useState("");
   const [filterValue, setFilterValue] = useState(''); 
   const navRef = useRef();  
 const showNavbar = () => {
@@ -129,8 +130,10 @@ const deleteModalShow = () => {
 
 
 const handleClickDelete = (row) => {
+  
   setSelectedId(row._id);
   deleteModalShow();
+  setSelectedName(row.name);
 };
   const totalCount = filteredDatas.length;
 
@@ -152,12 +155,14 @@ const handleClickDelete = (row) => {
       cell: (row) => (
         <>
         <div>
-         <Button className='btn btn-1 me-3 ps-0' onClick={() => handleEdit(row)}>
-          <FontAwesomeIcon icon={faEdit} /> {/* Edit Icon */}
-        </Button>
         <Button className='btn btn-2 me-3 ps-0' onClick={() => handleViewDetails(row)}>
           <FontAwesomeIcon icon={faEye} /> {/* View Details Icon */}
         </Button>
+         <Button className='btn btn-1 me-3 ps-0' onClick={() => handleEdit(row)}>
+          <FontAwesomeIcon icon={faEdit} /> {/* Edit Icon */}
+        </Button>
+
+        
         <Button className='btn btn-3 me-3 ps-0' onClick={() => handleClickDelete(row)}>
           <FontAwesomeIcon icon={faTrash} /> {/* Delete Icon */}
         </Button>
@@ -269,7 +274,7 @@ const handleClickDelete = (row) => {
 
 
        {/* Modal for Delete Confirmation */}
-       <DeleteModal deleteclose={deleteModalClose} dlt={deleteModal} id={selectedId} getDatas={getDatas} />
+       <DeleteModal deleteclose={deleteModalClose} dlt={deleteModal} id={selectedId} selectedName={selectedName} getDatas={getDatas} />
     </>
   );
 }

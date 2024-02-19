@@ -9,9 +9,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Container, Row, Col } from 'react-bootstrap';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import '../style/addmodel.css';
+import { showSuccessAlert, showFailsAlert } from '../Toastify/tostifyAlert';
 const App = ({getDatas, fetchUserRoles}) => {
   const [show, setShow] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -87,11 +86,7 @@ const App = ({getDatas, fetchUserRoles}) => {
           userRoles: values.userRoles,
         });
     
-        toast.success('Data successfully added', {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-          className: 'toast-message',
-        });
+        showSuccessAlert("Successfully Added");
     
         handleClose();
          getDatas();
@@ -121,7 +116,7 @@ const App = ({getDatas, fetchUserRoles}) => {
 
   return (
     <>
-      <ToastContainer autoClose={50000} />
+   
       <Button style={{ background: '#5bb6ea', border: 'none', color: 'white', fontWeight: '600',marginBottom:'10px'  }} onClick={handleShow}>
         + New
       </Button>
@@ -268,10 +263,30 @@ const App = ({getDatas, fetchUserRoles}) => {
                     ) : null}
                   </Form.Group>
                 </Col>
+
+
+
                 <Col md={6}>
                 <Form.Group  className="mb-3 " controlId="confirmPassword">
                   <Form.Label className='mandatory-label' style={{fontSize:'14px'}}>User Role</Form.Label>
-                <Form.Select
+                  <Form.Select
+  as="select"
+  className='input-controll'
+  name="userRoles"
+  value={formik.values.userRoles}
+  onChange={formik.handleChange}
+  onBlur={formik.handleBlur}
+>
+  <option value="" label="Select a role" />
+  {['admin', 'licensee', 'vendor', 'operator', 'accountant'].map(role => (
+    <option key={role} value={role}>
+      {role.charAt(0).toUpperCase() + role.slice(1)}
+    </option>
+  ))}
+</Form.Select>
+
+                {/* <Form.Select
+                    as="select"
   className='input-controll'
   name="userRoles"
   value={formik.values.userRoles} // Update this line
@@ -285,9 +300,11 @@ const App = ({getDatas, fetchUserRoles}) => {
   <option key={role._id} value={role._id}>
     {capitalizeFirstLetter (role.name)}
   </option>
+  
 ))}
 
-</Form.Select>
+
+</Form.Select> */}
 </Form.Group>
 </Col>
                 

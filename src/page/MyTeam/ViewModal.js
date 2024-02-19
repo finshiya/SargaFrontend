@@ -39,6 +39,7 @@ function ViewModal({ showModal, handleClose, selectedDatas }) {
               <p className='view-data'> {selectedDatas?.lname}</p> */}
                <Form.Label style={{fontSize:'14px'}}>Last Name</Form.Label>
               <Form.Control
+               
                 rows={3}
                 disabled={true} 
                 value={` ${selectedDatas?.lname || ''}`}
@@ -77,7 +78,7 @@ function ViewModal({ showModal, handleClose, selectedDatas }) {
               <Form.Control
                 rows={3}
                 disabled={true} 
-                value={ capitalizeFirstLetter (` ${selectedDatas?.userRoles?.name || ''}`)}
+                value={` ${selectedDatas?.userRoles || ''}`}
                 className='custom-disabled-input'
               />
             </Col>

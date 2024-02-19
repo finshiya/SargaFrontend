@@ -148,13 +148,7 @@ function EditModal({ showModal, handleClose, selectedDatas, handleUpdate }) {
                     />
                   </Form.Group>
                 </Col>
-
-      
-                <Col md={6}>
-
-                  <Form.Group  className="mb-3 " controlId="userRoles">
-                  <Form.Label style={{fontSize:'14px'}}>User Role </Form.Label>
-                  <Form.Control 
+  {/* <Form.Control 
                   as="select"
                   name="userRoles"
                   value={formik.values.userRoles}
@@ -168,12 +162,31 @@ function EditModal({ showModal, handleClose, selectedDatas, handleUpdate }) {
       {capitalizeFirstLetter (type.name)}
     </option>
   ))}
-        </Form.Control>
-        {formik.touched.userRoles && formik.errors.enqSource ? (
-                <div className="error" style={{color:'red'}}>{formik.errors.enqSource}</div>
-              ) : null}
-</Form.Group>
-                </Col>
+        </Form.Control> */}
+      
+      <Col md={6}>
+  <Form.Group className="mb-3" controlId="userRoles">
+    <Form.Label style={{ fontSize: '14px' }}>User Role</Form.Label>
+    <Form.Control
+      as="select"
+      name="userRoles"
+      value={formik.values.userRoles}
+      onChange={formik.handleChange}
+      onBlur={formik.handleBlur}
+      className={`form-select ${formik.touched.userRoles && formik.errors.userRoles ? 'is-invalid' : ''}`}
+    >
+      <option value="" disabled>Select a role</option>
+      {userRole.map(role => (
+        <option key={role._id} value={role._id}>
+          {capitalizeFirstLetter(role.name)}
+        </option>
+      ))}
+    </Form.Control>
+    {formik.touched.userRoles && formik.errors.userRoles ? (
+      <div className="error" style={{ color: 'red' }}>{formik.errors.userRoles}</div>
+    ) : null}
+  </Form.Group>
+</Col>
               </Row>
             </Form>
 

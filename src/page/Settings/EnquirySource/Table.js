@@ -28,6 +28,7 @@ function Table() {
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [filterValue, setFilterValue] = useState(''); 
+  const [selectedName, setSelectedName] = useState("");
   const navRef = useRef();  
   const [query, setQuery] = useState('');  
   const showNavbar = () => {
@@ -53,6 +54,7 @@ function Table() {
   const handleClickDelete = (row) => {
     setSelectedId(row._id);
     deleteModalShow();
+    setSelectedName(row.name);
   };
 
 
@@ -122,12 +124,13 @@ const getDatas = async () => {
       cell: (row) => (
         <>
         <div>
-         <Button className='btn btn-1 me-3 ps-0' onClick={() => handleEdit(row)}>
-          <FontAwesomeIcon icon={faEdit} /> {/* Edit Icon */}
-        </Button>
         <Button className='btn btn-2 me-3 ps-0' onClick={() => handleViewDetails(row)}>
           <FontAwesomeIcon icon={faEye} /> {/* View Details Icon */}
         </Button>
+         <Button className='btn btn-1 me-3 ps-0' onClick={() => handleEdit(row)}>
+          <FontAwesomeIcon icon={faEdit} /> {/* Edit Icon */}
+        </Button>
+     
         <Button className='btn btn-3 me-3 ps-0' onClick={() => handleClickDelete(row)}>
               <FontAwesomeIcon icon={faTrash} />
             </Button>
@@ -224,7 +227,7 @@ const getDatas = async () => {
 
        <EditModal showModal={showEditModal} handleClose={handleClose} selectedDatas={selectedDatas} handleUpdate={handleUpdate} />
        <ViewModal showModal={showViewModal} handleClose={handleClose} selectedDatas={selectedDatas} />
-       <DeleteModal deleteclose={deleteModalClose} dlt={deleteModal} id={selectedId} getDatas={getDatas} />
+       <DeleteModal deleteclose={deleteModalClose} dlt={deleteModal} id={selectedId} selectedName={selectedName} getDatas={getDatas} />
     </>
   );
 }

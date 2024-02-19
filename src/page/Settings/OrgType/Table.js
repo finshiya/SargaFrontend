@@ -25,6 +25,7 @@ import { useRef } from 'react';
 
 function Table() {
   const [datas, setDatas] = useState([]);
+  const [selectedName, setSelectedName] = useState("");
   const [search, setSearch] = useState("");
   const [filteredDatas, setFilteredDatas] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -130,6 +131,7 @@ const deleteModalShow = () => {
 const handleClickDelete = (row) => {
   setSelectedId(row._id);
   deleteModalShow();
+  setSelectedName(row.name);
 };
   const totalCount = filteredDatas.length;
 
@@ -151,11 +153,11 @@ const handleClickDelete = (row) => {
       cell: (row) => (
         <>
         <div>
-         <Button className='btn btn-1 me-3 ps-0' onClick={() => handleEdit(row)}>
-          <FontAwesomeIcon icon={faEdit} /> {/* Edit Icon */}
-        </Button>
         <Button className='btn btn-2 me-3 ps-0' onClick={() => handleViewDetails(row)}>
           <FontAwesomeIcon icon={faEye} /> {/* View Details Icon */}
+        </Button>
+         <Button className='btn btn-1 me-3 ps-0' onClick={() => handleEdit(row)}>
+          <FontAwesomeIcon icon={faEdit} /> {/* Edit Icon */}
         </Button>
         <Button className='btn btn-3 me-3 ps-0' onClick={() => handleClickDelete(row)}>
           <FontAwesomeIcon icon={faTrash} /> {/* Delete Icon */}
@@ -285,7 +287,7 @@ const handleClickDelete = (row) => {
 
 
        {/* Modal for Delete Confirmation */}
-       <DeleteModal deleteclose={deleteModalClose} dlt={deleteModal} id={selectedId} getDatas={getDatas} />
+       <DeleteModal deleteclose={deleteModalClose} dlt={deleteModal} id={selectedId} selectedName={selectedName} getDatas={getDatas} />
     </>
   );
 }

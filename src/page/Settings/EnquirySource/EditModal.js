@@ -43,6 +43,21 @@ function EditModal({ showModal, handleClose, selectedDatas, handleUpdate }) {
       
     });
   }, [selectedDatas]);
+
+   // Function to check if there are changes in the form
+   const hasChanges = () => {
+    return formik.values.name !== selectedDatas.name || formik.values.desc !== selectedDatas.desc;
+  };
+
+  // Function to handle form submission
+  const handleSubmit = () => {
+    if (hasChanges()) {
+      formik.submitForm();
+    } else {
+      // No changes, do not submit
+      handleClose();
+    }
+  };
   
 
 
@@ -52,7 +67,7 @@ function EditModal({ showModal, handleClose, selectedDatas, handleUpdate }) {
         <Modal.Title>Edit Enquiry Source</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-   
+   <Container>
       <Form onSubmit={formik.handleSubmit}>
           
           <Form.Group className="mb-3" controlId="name">
@@ -88,13 +103,13 @@ function EditModal({ showModal, handleClose, selectedDatas, handleUpdate }) {
 
             
       </Form>
-     
+      </Container>
       </Modal.Body>
       <Modal.Footer>
           <Button style={{ background: 'none', color: '#5bb6ea', border: '1px solid #5bb6ea' }} onClick={handleClose}>
             Close
           </Button>
-          <Button style={{ background: '#5bb6ea', border: 'none', fontWeight: '600' }} onClick={formik.submitForm}>
+          <Button style={{ background: '#5bb6ea', border: 'none', fontWeight: '600' }} onClick={handleSubmit}>
             Submit
           </Button>
         </Modal.Footer>

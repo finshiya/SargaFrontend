@@ -8,8 +8,8 @@ import * as Yup from 'yup';
 import '../../style/addmodel.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Container } from 'react-bootstrap';
 
+import { Container } from 'react-bootstrap';
 function AddModal({getDatas}) {
   const [show, setShow] = React.useState(false);
   const handleClose = () => {
@@ -44,28 +44,28 @@ function AddModal({getDatas}) {
         const response = await axios.post('http://localhost:3000/supportType',values);
         // console.log('Response:', response.data);
         getDatas();
-        toast.success('Data Added successfully!',{ autoClose: 1000 });
-    
+        toast.success("Successfully Added");
+       
         handleClose();
+     
       } catch (error) {
         if (error.response) {
           console.log('Error Response:', error.response.data);
           console.log('Status Code:', error.response.status);
+          toast.error('Support Type Already Existed', error.response.status);
         } else if (error.request) {
+          toast.error('No response received from the server.');
           console.log('No response received from the server.');
         } else {
-          console.log('Error:', error.message);
-          toast.error('Error creating data Please try again.',{ autoClose: 1000 });
+          toast.error('Error:', error.message);
         }
       }
     },
   });
 
-
-
   return (
     <>
-    <ToastContainer/>
+  
       <Button style={{ background: '#5bb6ea', border: 'none', color: 'white', fontWeight: '600', marginBottom:'10px' }} onClick={handleShow}>
         + New
       </Button>

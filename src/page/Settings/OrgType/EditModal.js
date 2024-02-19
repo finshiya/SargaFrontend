@@ -9,6 +9,7 @@ import * as Yup from 'yup';
 import '../../style/edit.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { Container } from 'react-bootstrap';
 
 function EditModal({ showModal, handleClose, selectedDatas, handleUpdate }) {
 
@@ -51,7 +52,21 @@ function EditModal({ showModal, handleClose, selectedDatas, handleUpdate }) {
       status: selectedDatas?.status || '',
     });
   }, [selectedDatas]);
+  
+  // Function to check if there are changes in the form
+  const hasChanges = () => {
+    return formik.values.name !== selectedDatas.name || formik.values.desc !== selectedDatas.desc;
+  };
 
+  // Function to handle form submission
+  const handleSubmit = () => {
+    if (hasChanges()) {
+      formik.submitForm();
+    } else {
+      // No changes, do not submit
+      handleClose();
+    }
+  };
 
   return (
     <>
@@ -61,10 +76,11 @@ function EditModal({ showModal, handleClose, selectedDatas, handleUpdate }) {
         <Modal.Title>Edit Organization Type</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        <Container>
       <Form onSubmit={formik.handleSubmit}>
           
           <Form.Group className="mb-3" controlId="name">
-              <Form.Label style={{ fontSize: '14px' }}>OrgType</Form.Label>
+              <Form.Label style={{ fontSize: '14px' }}>Organization Type</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter OrgType"
@@ -92,29 +108,16 @@ function EditModal({ showModal, handleClose, selectedDatas, handleUpdate }) {
                 <div className="error" style={{color:'red'}}>{formik.errors.descp}</div>
               ) : null}
             </Form.Group>
-            <Form.Group className="mb-3" controlId="status">
-              <Form.Label style={{ fontSize: '14px' }}>Status</Form.Label>
-              <Form.Control
-             
-                type="text"
-                placeholder=" status"
-                name="status"
-                value={formik.values.status}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-              />
-              {formik.touched.status && formik.errors.status ? (
-                <div className="error" style={{color:'red'}}>{formik.errors.status}</div>
-              ) : null}
-            </Form.Group>
+     
 
             </Form>
+            </Container>
       </Modal.Body>
       <Modal.Footer>
       <Button style={{ background: 'none', color: '#5bb6ea', border: '1px solid #5bb6ea' }} onClick={handleClose}>
         Close
       </Button>
-      <Button style={{ background: '#5bb6ea', border: 'none', fontWeight: '600' }} onClick={formik.submitForm}>
+      <Button style={{ background: '#5bb6ea', border: 'none', fontWeight: '600' }} onClick={handleSubmit}>
         Submit
       </Button>
     </Modal.Footer>

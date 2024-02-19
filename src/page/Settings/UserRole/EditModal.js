@@ -8,6 +8,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import '../../style/edit.css';
 import { useEffect } from 'react';
+import { Container } from 'react-bootstrap';
 
 function EditModal({ showModal, handleClose, selectedDatas, handleUpdate }) {
   // Formik form configuration
@@ -43,7 +44,20 @@ function EditModal({ showModal, handleClose, selectedDatas, handleUpdate }) {
     });
   }, [selectedDatas]);
   
+ // Function to check if there are changes in the form
+ const hasChanges = () => {
+  return formik.values.name !== selectedDatas.name || formik.values.desc !== selectedDatas.desc;
+};
 
+// Function to handle form submission
+const handleSubmit = () => {
+  if (hasChanges()) {
+    formik.submitForm();
+  } else {
+    // No changes, do not submit
+    handleClose();
+  }
+};
 
   return (
     <Modal show={showModal} onHide={handleModalHide} backdrop="static" centered>
@@ -51,9 +65,10 @@ function EditModal({ showModal, handleClose, selectedDatas, handleUpdate }) {
         <Modal.Title>Edit User Role</Modal.Title>
       </Modal.Header>
       <Modal.Body>
+        <Container>
       <Form onSubmit={formik.handleSubmit}>
           
-          <Form.Group className="mb-3" controlId="name">
+          <Form.Group className="mb-3" controlId="name" onSubmit={formik.handleSubmit}>
               <Form.Label style={{ fontSize: '14px' }}>Name</Form.Label>
               <Form.Control
                 type="text"
@@ -86,13 +101,13 @@ function EditModal({ showModal, handleClose, selectedDatas, handleUpdate }) {
 
             
       </Form>
-  
+      </Container>
       </Modal.Body>
       <Modal.Footer>
           <Button style={{ background: 'none', color: '#5bb6ea', border: '1px solid #5bb6ea' }} onClick={handleClose}>
             Close
           </Button>
-          <Button style={{ background: '#5bb6ea', border: 'none', fontWeight: '600' }} onClick={formik.submitForm}>
+          <Button style={{ background: '#5bb6ea', border: 'none', fontWeight: '600' }} onClick={handleSubmit}>
             Submit
           </Button>
         </Modal.Footer>

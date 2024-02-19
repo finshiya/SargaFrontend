@@ -29,6 +29,7 @@ function Table() {
   const [filteredDatas, setFilteredDatas] = useState([]);
   const [query, setQuery] = useState(''); 
   const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedName, setSelectedName] = useState("");
   const [showViewModal, setShowViewModal] = useState(false);
   const [selectedDatas, setSelectedDatas] = useState(null);
   const [deleteModal,setDeleteModal] =useState(false);
@@ -118,6 +119,7 @@ const handleClickDelete = (row) => {
  
   setSelectedId(row._id);
   deleteModalShow();
+  setSelectedName(row.supportType.name);
 };
   const totalCount = filteredDatas.length;
 
@@ -241,7 +243,7 @@ const handleClickDelete = (row) => {
       <EditModal showModal={showEditModal} handleClose={handleClose} selectedDatas={selectedDatas} handleUpdate={handleUpdate} />
       {/* Modal for Viewing Details */}
       <ViewModal showModal={showViewModal} handleClose={handleClose} selectedDatas={selectedDatas} />
-      <DeleteModal deleteclose={deleteModalClose} dlt={deleteModal} id={selectedId} getDatas={getDatas} />
+      <DeleteModal deleteclose={deleteModalClose} dlt={deleteModal} id={selectedId} selectedName={selectedName} getDatas={getDatas} />
     </>
   );
 }

@@ -1,79 +1,191 @@
+import React, { useState, useEffect } from "react";
+import { Modal, Button, Container, Row, Col, Form } from "react-bootstrap";
+import axios from "axios";
+import "./../style/view.css";
+import "./style/Tab.css";
 
-import React from 'react'
-import { Modal, Button, Container, Row, Col, Form } from 'react-bootstrap'
-import './../style/view.css';
+function ExpandedView({ showModal, handleClose, selectedDatas }) {
+  const [paymentDetails, setPaymentDetails] = useState([]);
+  const [toggle, setToggle] = useState(1);
 
-const ExpandedView  = ({ showModal, handleClose, selectedDatas }) => {
-console.log( 'expandible FollowUp',selectedDatas);
+  // useEffect(() => {
+  //   if (toggle === 2 && paymentDetails.length === 0) {
+  //     fetchPaymentDetails();
+  //   }
+  // }, [toggle]);
+
+  // const fetchPaymentDetails = async () => {
+  //   try {
+  //     const response = await axios.get("http://localhost:3000/payments");
+  //     setPaymentDetails(response.data.Payments);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
+  const capitalizeFirstLetter = (value) => {
+    return value
+      .toLowerCase()
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(" ");
+  };
+
+  const toggleTab = (index) => {
+    setToggle(index);
+  };
+
   return (
-   <>
-    <Modal show={showModal} onHide={handleClose}  backdrop="static" centered>
-      <Modal.Header closeButton>
-        <Modal.Title>Follow-Up Details</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-
-      <Container>
-          <Row>
-          <Col md={6} className='pe-0'>
-           <Form.Label style={{fontSize:'14px'}}>Follow-Up Details</Form.Label>
-              <Form.Control
-                as="textarea"
-                disabled={true} 
-                value={`${selectedDatas?.followUpDetails || ''}`}
-                className='custom-disabled-input'
-              />
-         </Col>
-
-                  <Col md={6} className='pe-0'>
-           <Form.Label style={{fontSize:'14px'}}>Remarks</Form.Label>
-              <Form.Control
-                as="textarea"
-                disabled={true} 
-                value={`${selectedDatas?.remarks || ''}`}
-                className='custom-disabled-input'
-              />
-         </Col>
-         <Col md={6}>
-           <Form.Label style={{fontSize:'14px'}}>Next Contact Date</Form.Label>
-              <Form.Control
-                            disabled={true} 
-                value={`${selectedDatas?.nextContactDate || ''}`}
-                className='custom-disabled-input'
-              />
-         </Col>
-         <Col md={6}>
-           <Form.Label style={{fontSize:'14px'}}>Created At</Form.Label>
-              <Form.Control
-                            disabled={true} 
-                value={`${selectedDatas?.createdAt || ''}`}
-                className='custom-disabled-input'
-              />
-         </Col>
-         <Col md={6}>
-           <Form.Label style={{fontSize:'14px'}}>Created By</Form.Label>
-              <Form.Control
-                            disabled={true} 
-                value={`${selectedDatas?.createdBy || ''}`}
-                className='custom-disabled-input'
-              />
-         </Col>
-       
-            </Row>
+    <>
+      <Modal show={showModal} onHide={handleClose} backdrop="static" centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Order Details</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Container>
             <Row>
-   
-            </Row>          
-        </Container>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button style={{ background: 'none', color: '#5bb6ea', border: '1px solid #5bb6ea' }} onClick={handleClose}>
-          Close
-        </Button>
-      </Modal.Footer>
-    </Modal>
+              {/* <Col md={6}>
+                <div
+                  onClick={() => toggleTab(1)}
+                  className={`${toggle === 1 ? "tab active-tab" : "tab"}`}
+                >
+                  Order Details
+                </div>
+              </Col> */}
+              {/* <Col md={6}>
+                <div
+                  onClick={() => toggleTab(2)}
+                  className={`${toggle === 2 ? "tab active-tab" : "tab"}`}
+                >
+                  Payments Details
+                </div>
+              </Col> */}
+            </Row>
+            <div className="contents">
+              <div
+                className={`${
+                  toggle === 1 ? "content active-content" : "content"
+                }`}
+              >
+                <Row>
+                  <Col md={6}>
+                    <Form.Label style={{ fontSize: "14px" }}>
+                      OrderId
+                    </Form.Label>
+                    <Form.Control
+                      disabled={true}
+                      value={capitalizeFirstLetter(
+                        `${selectedDatas?.OrderId || ""}`
+                      )}
+                      className="custom-disabled-input"
+                    />
+                  </Col>
+                  <Col md={6}>
+                    <Form.Label style={{ fontSize: "14px" }}>
+                      Order Details
+                    </Form.Label>
+                    <Form.Control
+                      disabled={true}
+                      value={capitalizeFirstLetter(
+                        `${selectedDatas?.followUpDetails || ""}`
+                      )}
+                      className="custom-disabled-input"
+                    />
+                  </Col>
+                  <Col md={6}>
+                    <Form.Label style={{ fontSize: "14px" }}>
+                      Deliverable Date
+                    </Form.Label>
+                    <Form.Control
+                      disabled={true}
+                      value={capitalizeFirstLetter(
+                        `${selectedDatas?.nextContactDate || ""}`
+                      )}
+                      className="custom-disabled-input"
+                    />
+                  </Col>
+                  <Col md={6}>
+                    <Form.Label style={{ fontSize: "14px" }}>Status</Form.Label>
+                    <Form.Control
+                      disabled={true}
+                      value={capitalizeFirstLetter(
+                        `${selectedDatas?.status || ""}`
+                      )}
+                      className="custom-disabled-input"
+                    />
+                  </Col>
+                </Row>
+              </div>
+              {/* <div className={`${toggle === 2 ? "content active-content" : "content"}`}>
+  {paymentDetails && paymentDetails.length > 0 ? (
+    paymentDetails.map((payment, index) => (
+      <Row key={index}>
+         <Col md={6}>
+          <Form.Label style={{ fontSize: "14px" }}>
+          Payment Date
+          </Form.Label>
+          <Form.Control
+            disabled={true}
+            value={`${payment.nextContactDate || ""}`}
+            className="custom-disabled-input"
+          />
+        </Col>
+        <Col md={6}>
+          <Form.Label style={{ fontSize: "14px" }}>
+            Payment Method
+          </Form.Label>
+          <Form.Control
+            disabled={true}
+            value={capitalizeFirstLetter(
+              `${payment.paymentMethod || ""}`
+            )}
+            className="custom-disabled-input"
+          />
+        </Col>
+        <Col md={6}>
+          <Form.Label style={{ fontSize: "14px" }}>
+            Payment Amount
+          </Form.Label>
+          <Form.Control
+            disabled={true}
+            value={`${payment.paymentAmount || ""}`}
+            className="custom-disabled-input"
+          />
+        </Col>
+        <Col md={6}>
+          <Form.Label style={{ fontSize: "14px" }}>
+          Transaction Id
+          </Form.Label>
+          <Form.Control
+            disabled={true}
+            value={`${payment.transactionId || ""}`}
+            className="custom-disabled-input"
+          />
+        </Col>
+      </Row>
+    ))
+  ) : (
+    <p>No payment details available</p>
+  )}
+</div> */}
+            </div>
+          </Container>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            style={{
+              background: "none",
+              color: "#000000",
+              border: "1px solid #000000",
+            }}
+            onClick={handleClose}
+          >
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
-
-  )
+  );
 }
 
-export default ExpandedView 
+export default ExpandedView;

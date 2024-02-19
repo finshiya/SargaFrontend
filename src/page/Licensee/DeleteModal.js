@@ -7,7 +7,7 @@ import axios from 'axios';
 import '../style/delete.css';
 import { Container } from 'react-bootstrap';
 
-const DeleteModal = ({getDatas,deleteclose, dlt,id}) => {
+const DeleteModal = ({getDatas,deleteclose, dlt,id, selectedName}) => {
 
     const [remove, setRemove] = useState(id)
 
@@ -59,7 +59,7 @@ const DeleteModal = ({getDatas,deleteclose, dlt,id}) => {
           </Modal.Header>
           <Modal.Body >
             <Container>
-            <p>Are you sure want to delete ?</p>
+            <p>Are you sure want to delete  <span style={{color:'red'}}>  {selectedName}</span>  ?  </p>
             </Container>
           </Modal.Body>
           <Modal.Footer>

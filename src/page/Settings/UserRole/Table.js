@@ -27,6 +27,7 @@ function Table() {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showViewModal, setShowViewModal] = useState(false);
   const [selectedDatas, setSelectedDatas] = useState(null);
+  const [selectedName, setSelectedName] = useState("");
   const [deleteModal,setDeleteModal] =useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [query, setQuery] = useState('');  
@@ -56,6 +57,7 @@ const deleteModalShow = () => {
 const handleClickDelete = (row) => {
   setSelectedId(row._id);
   deleteModalShow();
+  setSelectedName(row.name);
 };
 
  
@@ -128,12 +130,14 @@ const handleClickDelete = (row) => {
       cell: (row) => (
         <>
         <div>
-         <Button  className='btn btn-1 me-3 ps-0' onClick={() => handleEdit(row)}>
-          <FontAwesomeIcon icon={faEdit} />
-        </Button>
         <Button className='btn btn-2 me-3 ps-0' onClick={() => handleViewDetails(row)}>
           <FontAwesomeIcon icon={faEye} />
         </Button>
+        
+         <Button  className='btn btn-1 me-3 ps-0' onClick={() => handleEdit(row)}>
+          <FontAwesomeIcon icon={faEdit} />
+        </Button>
+  
         <Button className='btn btn-3 me-3 ps-0' onClick={() => handleClickDelete(row)}>
           <FontAwesomeIcon icon={faTrash} /> 
         </Button>
@@ -260,7 +264,7 @@ const handleClickDelete = (row) => {
 
 
        {/* Modal for Delete Confirmation */}
-       <DeleteModal deleteclose={deleteModalClose} dlt={deleteModal} id={selectedId} getDatas={getDatas} />
+       <DeleteModal deleteclose={deleteModalClose} dlt={deleteModal} id={selectedId} selectedName={selectedName} getDatas={getDatas} />
     </>
   );
 }

@@ -1,5 +1,5 @@
-import React from 'react'
-const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
+import React from "react";
+const Dashboard = React.lazy(() => import("./views/dashboard/Dashboard"));
 // const Colors = React.lazy(() => import('./views/theme/colors/Colors'))
 // const Typography = React.lazy(() => import('./views/theme/typography/Typography'))
 
@@ -15,7 +15,7 @@ const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 // const Placeholders = React.lazy(() => import('./views/base/placeholders/Placeholders'))
 // const Popovers = React.lazy(() => import('./views/base/popovers/Popovers'))
 // const Progress = React.lazy(() => import('./views/base/progress/Progress'))
-const Spinners = React.lazy(() => import('./views/base/spinners/Spinners'))
+const Spinners = React.lazy(() => import("./views/base/spinners/Spinners"));
 // const Tables = React.lazy(() => import('./views/base/tables/Tables'))
 // const Tooltips = React.lazy(() => import('./views/base/tooltips/Tooltips'))
 
@@ -34,8 +34,6 @@ const Spinners = React.lazy(() => import('./views/base/spinners/Spinners'))
 // const Select = React.lazy(() => import('./views/forms/select/Select'))
 // const Validation = React.lazy(() => import('./views/forms/validation/Validation'))
 
-
-
 // Icons
 // const CoreUIIcons = React.lazy(() => import('./views/icons/coreui-icons/CoreUIIcons'))
 // const Flags = React.lazy(() => import('./views/icons/flags/Flags'))
@@ -45,24 +43,37 @@ const Spinners = React.lazy(() => import('./views/base/spinners/Spinners'))
 // const Badges = React.lazy(() => import('./views/notifications/badges/Badges'))
 // const Modals = React.lazy(() => import('./views/notifications/modals/Modals'))
 // const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
-const SupportType = React.lazy(() => import('./page/Settings/SupportType/Index'))
-const EnquirySource = React.lazy(() => import('./page/Settings/EnquirySource/Index'))
-const EnquiryMode = React.lazy(() => import('./page/Settings/EnquiryMode'))
-const OrgType = React.lazy(() => import('./page/Settings/OrgType/Index'))
-const OrgCategory = React.lazy(() => import('./page/Settings/OrgCategory/Index'))
-const ProductServices = React.lazy(() => import('./page/Settings/ProductServices/Index'))
-const EnquiryType = React.lazy(() => import('./page/Settings/EnquiryType/Index'))
-const UserRoles = React.lazy(() => import('./page/Settings/UserRole/index'))
-const EnquiryManagement = React.lazy(() => import('./page/EnquiryMangement/Index'))
-const FollowUp = React.lazy(() => import('./page/FollowUp/Index'))
-const Licensee = React.lazy(() => import('./page/Licensee/index'))
-const MyTeam = React.lazy(() => import('./page/MyTeam/index'))
-const SupportEnquiry = React.lazy(() => import('./page/Support/Index'));
-
+const SupportType = React.lazy(() =>
+  import("./page/Settings/SupportType/Index")
+);
+const EnquirySource = React.lazy(() =>
+  import("./page/Settings/EnquirySource/Index")
+);
+const EnquiryMode = React.lazy(() => import("./page/Settings/EnquiryMode"));
+const OrgType = React.lazy(() => import("./page/Settings/OrgType/Index"));
+const OrgCategory = React.lazy(() =>
+  import("./page/Settings/OrgCategory/Index")
+);
+const ProductServices = React.lazy(() =>
+  import("./page/Settings/ProductServices/Index")
+);
+const EnquiryType = React.lazy(() =>
+  import("./page/Settings/EnquiryType/Index")
+);
+const UserRoles = React.lazy(() => import("./page/Settings/UserRole/index"));
+const EnquiryManagement = React.lazy(() =>
+  import("./page/EnquiryMangement/Index")
+);
+const FollowUp = React.lazy(() => import("./page/FollowUp/Index"));
+// const Licensee = React.lazy(() => import('./page/Licensee/index'))
+const MyTeam = React.lazy(() => import("./page/MyTeam/index"));
+const Payment = React.lazy(() => import("./page/Payment/index"));
+const SupportEnquiry = React.lazy(() => import("./page/Support/Index"));
+const Ratecard = React.lazy(() => import("./page/Settings/Ratecard/index"));
 
 const routes = [
-  { path: '/', exact: true, name: 'Home' },
-  { path: '/dashboard', name: 'Dashboard', element: Dashboard },
+  { path: "/", exact: true, name: "Home" },
+  { path: "/dashboard", name: "Dashboard", element: Dashboard },
   // { path: '/theme', name: 'Theme', element: Colors, exact: true },
   // { path: '/theme/colors', name: 'Colors', element: Colors },
   // { path: '/theme/typography', name: 'Typography', element: Typography },
@@ -78,7 +89,7 @@ const routes = [
   // { path: '/base/placeholders', name: 'Placeholders', element: Placeholders },
   // { path: '/base/popovers', name: 'Popovers', element: Popovers },
   // { path: '/base/progress', name: 'Progress', element: Progress },
-  { path: '/base/spinners', name: 'Spinners', element: Spinners },
+  { path: "/base/spinners", name: "Spinners", element: Spinners },
   // { path: '/base/tables', name: 'Tables', element: Tables },
   // { path: '/base/tooltips', name: 'Tooltips', element: Tooltips },
   // { path: '/buttons', name: 'Buttons', element: Buttons, exact: true },
@@ -121,63 +132,80 @@ const routes = [
   // { path: '/notifications/badges', name: 'Badges', element: Badges },
   // { path: '/notifications/modals', name: 'Modals', element: Modals },
   // { path: '/notifications/toasts', name: 'Toasts', element: Toasts },
- 
-  { path: '/EnquiryManagement', name: 'Enquiries', element: EnquiryManagement, exact: true },
-  
-  { path: '/followUp', name: 'FollowUp', element: FollowUp, exact: true },
-  { path: '/Licensee', name: 'Licensee', element: Licensee, exact: true },
 
-  { path: '/MyTeam', name: 'My Team', element: MyTeam, exact: true },
-  { path: '/SupportEnquiry', name: 'Suppor', element: SupportEnquiry, exact: true },
-
-  { path: '/Settings', name: 'Settings', element: EnquirySource, exact: true },
-  { path: '/Settings/EnquirySource', name: 'EnquirySource', element: EnquirySource },
   {
-    path: '/Settings/EnquirySource',
-    name: ' EnquirySource',
+    path: "/customers",
+    name: "Enquiries",
+    element: EnquiryManagement,
+    exact: true,
+  },
+
+  { path: "/orders", name: "FollowUp", element: FollowUp, exact: true },
+  // { path: '/Licensee', name: 'Licensee', element: Licensee, exact: true },
+
+  { path: "/MyTeam", name: "My Team", element: MyTeam, exact: true },
+  { path: "/payment", name: "Payment", element: Payment, exact: true },
+  {
+    path: "/SupportEnquiry",
+    name: "Suppor",
+    element: SupportEnquiry,
+    exact: true,
+  },
+
+  { path: "/Settings", name: "Settings", element: EnquirySource, exact: true },
+  {
+    path: "/Settings/EnquirySource",
+    name: "EnquirySource",
     element: EnquirySource,
   },
-  { path: '/Settings', name: 'Settings', element: EnquiryMode, exact: true },
-  { path: '/Settings/EnquiryMode', name: 'EnquiryMode', element: EnquiryMode },
+  {
+    path: "/Settings/EnquirySource",
+    name: " EnquirySource",
+    element: EnquirySource,
+  },
+  { path: "/Settings", name: "Settings", element: EnquiryMode, exact: true },
+  { path: "/Settings/EnquiryMode", name: "EnquiryMode", element: EnquiryMode },
 
   {
-    path: '/Settings/EnquiryType',
-    name: ' EnquiryType',
+    path: "/Settings/EnquiryType",
+    name: " EnquiryType",
     element: EnquiryType,
   },
   {
-    path: '/Settings/SupportType',
-    name: ' SupportType',
+    path: "/Settings/SupportType",
+    name: " SupportType",
     element: SupportType,
   },
   {
-    path: '/Settings/EnquiryMode',
-    name: ' EnquiryMode',
+    path: "/Settings/EnquiryMode",
+    name: " EnquiryMode",
     element: EnquiryMode,
   },
   {
-    path: '/Settings/OrgType',
-    name: 'OrgType ',
+    path: "/Settings/OrgType",
+    name: "OrgType ",
     element: OrgType,
   },
   {
-    path: '/Settings/OrgCategory',
-    name: 'OrgCategory ',
+    path: "/Settings/OrgCategory",
+    name: "OrgCategory ",
     element: OrgCategory,
   },
   {
-    path: '/Settings/ProductServices',
-    name: 'ProductServices ',
+    path: "/Settings/ProductServices",
+    name: "ProductServices ",
     element: ProductServices,
   },
   {
-    path: '/Settings/UserRoles',
-    name: 'User Roles ',
+    path: "/Settings/UserRoles",
+    name: "User Roles ",
     element: UserRoles,
-  }
+  },
+  {
+    path: "/Settings/Ratecard",
+    name: "Rate ",
+    element: Ratecard,
+  },
+];
 
-
-
-]
-
-export default routes
+export default routes;

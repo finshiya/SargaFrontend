@@ -5,8 +5,7 @@ import Modal from 'react-bootstrap/Modal';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { showSuccessAlert, showFailsAlert } from '../../Toastify/tostifyAlert';
 import '../../style/addmodel.css';
 import { Container } from 'react-bootstrap';
 
@@ -42,7 +41,8 @@ function AddModal({getDatas}) {
         await validationSchema.validate(values, { abortEarly: false });
         const response = await axios.post('http://localhost:3000/userroles', values);
         getDatas();
-        toast.success('Data Added successfully!',{ autoClose: 1000 });
+        showSuccessAlert("Successfully Added");
+       
         handleClose();
       } catch (error) {
         if (error.response) {
@@ -61,7 +61,7 @@ function AddModal({getDatas}) {
 
   return (
     <>
-    <ToastContainer autoClose={50000} />
+
       <Button style={{ background: '#5bb6ea', border: 'none', color: 'white', fontWeight: '600', marginBottom:'10px' }} onClick={handleShow}>
         + New
       </Button>

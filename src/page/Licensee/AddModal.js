@@ -7,9 +7,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Container, Row, Col } from 'react-bootstrap';
 import { BsEye, BsEyeSlash } from 'react-icons/bs';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import '../style/addmodel.css';
+import { showSuccessAlert, showFailsAlert } from '../Toastify/tostifyAlert';
 
 const App = ({getDatas}) => {
   const [show, setShow] = useState(false);
@@ -84,12 +83,7 @@ const App = ({getDatas}) => {
         console.log('Response:', response.data);
 
 
-             toast.success('Data successfully added', {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-          className: 'toast-message',
-        });
-        
+        showSuccessAlert("Successfully Added");
         handleClose();
         getDatas(); 
         // Refresh the page after successful submission
@@ -111,7 +105,7 @@ const App = ({getDatas}) => {
 
   return (
     <>
-      <ToastContainer autoClose={50000} />
+     
       <Button style={{ background: '#5bb6ea', border: 'none', color: 'white', fontWeight: '600',marginBottom:'10px' }} onClick={handleShow}>
         + New
       </Button>

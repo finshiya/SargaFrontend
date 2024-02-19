@@ -55,7 +55,21 @@ function EditModal({ showModal, handleClose, selectedDatas, handleUpdate }) {
       status:  selectedDatas?.status || '',
     });
   }, [selectedDatas]);
+ 
+  // Function to check if there are changes in the form
+  const hasChanges = () => {
+    return formik.values.name !== selectedDatas.name || formik.values.desc !== selectedDatas.desc;
+  };
 
+  // Function to handle form submission
+  const handleSubmit = () => {
+    if (hasChanges()) {
+      formik.submitForm();
+    } else {
+      // No changes, do not submit
+      handleClose();
+    }
+  };
 
   return (
     <>
@@ -119,7 +133,7 @@ function EditModal({ showModal, handleClose, selectedDatas, handleUpdate }) {
       <Button style={{ background: 'none', color: '#5bb6ea', border: '1px solid #5bb6ea' }} onClick={handleClose}>
         Close
       </Button>
-      <Button style={{ background: '#5bb6ea', border: 'none', fontWeight: '600' }} onClick={formik.submitForm}>
+      <Button style={{ background: '#5bb6ea', border: 'none', fontWeight: '600' }} onClick={handleSubmit}>
         Submit
       </Button>
     </Modal.Footer>

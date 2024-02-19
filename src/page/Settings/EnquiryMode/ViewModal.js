@@ -4,6 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import '../../style/view.css';
 import { Container, Row, Col } from 'react-bootstrap';
+import Form from 'react-bootstrap/Form';
 
 function ViewModal({ showModal, handleClose, selectedDatas }) {
 
@@ -23,13 +24,54 @@ function ViewModal({ showModal, handleClose, selectedDatas }) {
       <Modal.Body>
         <Container>
           <Row>
+        
+             
             <Col md={6}>
-              <p className='view-label'> Name</p>
-              <p className='view-data'> {selectedDatas?.name}</p>
+              <Form.Label style={{fontSize:'14px'}}>Name</Form.Label>
+              <Form.Control
+                rows={3}
+                disabled={true} 
+                value={ capitalizeFirstLetter (` ${selectedDatas?.name || ''}`)}
+                className='custom-disabled-input'
+              />
             </Col>
+
             <Col md={6}>
-              <p className='view-label'>Description</p>
-              <p className='view-data'> {selectedDatas?.desc}</p>
+              <Form.Label style={{fontSize:'14px'}}>Status</Form.Label>
+              <Form.Control
+                rows={3}
+                disabled={true} 
+                value={ capitalizeFirstLetter (` ${selectedDatas?.status || ''}`)}
+                className='custom-disabled-input'
+              />
+            </Col>
+  
+
+<Col md={6}>
+              <Form.Label style={{fontSize:'14px'}}>CreateAt</Form.Label>
+              <Form.Control
+                rows={3}
+                disabled={true} 
+                value={ capitalizeFirstLetter (` ${selectedDatas?.createdAt
+                  ? new Date(selectedDatas.createdAt).toLocaleDateString('en-GB', {
+                      day: '2-digit',
+                      month: '2-digit',
+                      year: 'numeric',
+                    })
+                  : ''}`)}
+                className='custom-disabled-input'
+              />
+            </Col>
+
+            <Col md={12}>
+              <Form.Label style={{fontSize:'14px'}}>Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                disabled={true} 
+                value={ capitalizeFirstLetter (` ${selectedDatas?.desc || ''}`)}
+                className='custom-disabled-input'
+              />
             </Col>
             
             </Row>

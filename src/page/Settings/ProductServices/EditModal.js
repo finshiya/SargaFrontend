@@ -55,6 +55,20 @@ function EditModal({ showModal, handleClose, selectedDatas, handleUpdate }) {
       isActive: selectedDatas?.isActive || false,
     });
   }, [selectedDatas]);
+    // Function to check if there are changes in the form
+    const hasChanges = () => {
+      return formik.values.name !== selectedDatas.name || formik.values.descp !== selectedDatas.descp;
+    };
+  
+    // Function to handle form submission
+    const handleSubmit = () => {
+      if (hasChanges()) {
+        formik.submitForm();
+      } else {
+        // No changes, do not submit
+        handleClose();
+      }
+    };
   
   return (
     <>
@@ -97,35 +111,7 @@ function EditModal({ showModal, handleClose, selectedDatas, handleUpdate }) {
               ) : null}
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="isActive">
-              <Form.Label style={{ fontSize: '14px' }}>Active Services</Form.Label>
-              <div>
-                <Form.Check
-                  type="switch"
-                  // label="Active"
-                  id="isActiveSwitch"
-                  name="isActive"
-                  checked={formik.values.isActive}
-                  onChange={() => {
-                    formik.setFieldValue('isActive', !formik.values.isActive);
-                  }}
-                  onBlur={formik.handleBlur}
-                />
-              </div>
-              {formik.errors.isActive && formik.touched.isActive ? (
-                <p
-                  style={{
-                    fontSize: '10px',
-                    color: 'red',
-                    marginTop: '1px',
-                    marginLeft: '2%',
-                  }}
-                  className="form-error"
-                >
-                  {formik.errors.isActive}
-                </p>
-              ) : null}
-            </Form.Group>
+           
 
    </Form>
    </Container>
@@ -134,7 +120,7 @@ function EditModal({ showModal, handleClose, selectedDatas, handleUpdate }) {
       <Button style={{ background: 'none', color: '#5bb6ea', border: '1px solid #5bb6ea' }} onClick={handleClose}>
         Close
       </Button>
-      <Button style={{ background: '#5bb6ea', border: 'none', fontWeight: '600' }} onClick={formik.submitForm}>
+      <Button style={{ background: '#5bb6ea', border: 'none', fontWeight: '600' }}  onClick={handleSubmit}>
         Submit
       </Button>
     </Modal.Footer>
