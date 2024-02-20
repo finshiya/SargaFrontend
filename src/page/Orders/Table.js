@@ -445,25 +445,8 @@ function Table() {
       name: "ACTIONS",
       cell: (row) => (
         <>
-          <div>
-            <Dropdown>
-              <Dropdown.Toggle variant="secondary" my-5>
-                <FontAwesomeIcon icon={faPlus} /> {/* Plus Icon */}
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item onClick={() => handleClickView(row)}>
-                  <FontAwesomeIcon icon={faEye} /> View
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleClickEdit(row)}>
-                  <FontAwesomeIcon icon={faEdit} /> Edit
-                </Dropdown.Item>
-                <Dropdown.Item onClick={() => handleClickDelete(row)}>
-                  <FontAwesomeIcon icon={faTrash} /> Delete
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-
-            <Button
+          <div style={{display:"flex"}}>
+          <Button
               className="btn btn-2 me-3 ps-0"
               onClick={() => handleClickAllocate(row)}
             >
@@ -471,11 +454,30 @@ function Table() {
             </Button>
 
             <Button
-              className="btn btn-2 me-3 ps-0"
+              className="btn btn-1 me-3 ps-0"
               onClick={() => handleClickPayment(row)}
             >
               <FontAwesomeIcon icon={faMoneyCheckDollar} />
             </Button>
+            <Dropdown style={{padding:"0px 20px 0px 0px"}}>
+              <Dropdown.Toggle  m-5 style={{background:"black"}}>
+                {/* <FontAwesomeIcon icon={faPlus} /> */}
+                 {/* Plus Icon */}
+              </Dropdown.Toggle >
+              <Dropdown.Menu  style={{zIndex:"1000"}}>
+                <Dropdown.Item onClick={() => handleViewDetails(row)}>
+                  <FontAwesomeIcon icon={faEye} className="btn-2"/> View
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => handleEdit(row)}>
+                  <FontAwesomeIcon icon={faEdit} className="btn-1"/> Edit
+                </Dropdown.Item>
+                <Dropdown.Item onClick={() => handleClickDelete(row)}>
+                  <FontAwesomeIcon icon={faTrash}className="btn-3" /> Delete
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+
+          
           </div>
         </>
       ),

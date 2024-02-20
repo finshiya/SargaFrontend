@@ -306,7 +306,7 @@ function Table() {
     const [loading, setLoading] = useState(true);
     const [showViewModal, setShowViewModal] = useState(false);
     const [selectedDatas, setSelectedDatas] = useState(null);
-    // const [selectedData, setSelectedData] = useState(null);
+    const [selectedData, setSelectedData] = useState(null);
 
     //  const [selectedId, setSelectedId] = useState(null);
     const [orderDataPresent, setOrderDataPresent] = useState(false);

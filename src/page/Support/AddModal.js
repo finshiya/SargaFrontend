@@ -129,7 +129,7 @@ function AddModal({getDatas}) {
   return (
     <>
 
-      <Button style={{ background: '#5bb6ea', border: 'none', color: 'white', fontWeight: '600', marginBottom:'10px' }} onClick={handleShow}>
+      <Button style={{ background: '#000000', border: 'none', color: 'white', fontWeight: '600', marginBottom:'10px' }} onClick={handleShow}>
         + New
       </Button>
 
