@@ -13,17 +13,19 @@ import "react-toastify/dist/ReactToastify.css";
 function AddModal({
   enqId,
   getDatas,
-  showFollowUpModal,
-  setShowFollowUpModal,
+  showOrderModal,
+  setShowOrderModal,
+ 
+  
 }) {
-  const [show, setShow] = React.useState(showFollowUpModal);
+  const [show, setShow] = React.useState(showOrderModal);
   const [enqTo, setEnqTo] = useState([]);
 
   const handleClose = () => {
     setShow(false);
     // Reset the form when the modal is closed
     formik.resetForm();
-    setShowFollowUpModal(false);
+    setShowOrderModal(false);
   };
 
   const capitalizeFirstLetter = (value) => {
@@ -37,8 +39,8 @@ function AddModal({
   const handleShow = () => setShow(true);
 
   useEffect(() => {
-    setShow(showFollowUpModal);
-  }, [showFollowUpModal]);
+    setShow(showOrderModal);
+  }, [showOrderModal]);
 
   // Validation schema using Yup
   const validationSchema = Yup.object({
@@ -72,7 +74,7 @@ function AddModal({
         await validationSchema.validate(values, { abortEarly: false });
 
         const response = await axios.post(
-          "http://localhost:3000/followUp",
+          "http://localhost:3000/orders",
           values
         );
         console.log("Response:", response.data);

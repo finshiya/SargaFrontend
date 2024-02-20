@@ -825,7 +825,7 @@ const AddModal = ({ getDatas }) => {
         await validationSchema.validate(values, { abortEarly: false });
 
         const response = await axios.post(
-          "http://localhost:3000/enquiries",
+          "http://localhost:3000/customers",
           values
         );
         console.log("Response:", response.data);

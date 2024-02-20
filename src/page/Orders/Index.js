@@ -1,11 +1,12 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Table from "./Table";
+
+import MainTab from "./MainTab";
 
 function index() {
   return (
     <div>
-      <Table />
+      <MainTab />
     </div>
   );
 }

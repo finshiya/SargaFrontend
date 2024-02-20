@@ -43,17 +43,17 @@ function EditModal({ showModal, handleClose, selectedDatas, handleUpdate }) {
   const formik = useFormik({
     initialValues: {
         enqId: selectedDatas?.enqId || '',
-        followUpDetails: selectedDatas?.followUpDetails || '',
+        orderDetails: selectedDatas?.orderDetails || '',
         nextContactDate: selectedDatas?.nextContactDate || '',
         status: selectedDatas?.status || '',
         remarks: selectedDatas?.remarks || ''
 
     },
     validationSchema: Yup.object({
-        enqId: Yup.string().required('enqId is required'),
-        followUpDetails: Yup.string().required('followUpDetails is required'),
-        nextContactDate: Yup.string().required('nextContactDate is required'),
-        remarks:Yup.string().required('remarks is required'),
+        enqId: Yup.string().required('Enq-Id is required'),
+        orderDetails: Yup.string().required('Order Detail is required'),
+        nextContactDate: Yup.string().required('Next Contact Date is required'),
+        remarks:Yup.string().required('Remarks is required'),
     }),
     onSubmit: (values) => {
       handleUpdate(selectedDatas?._id, values);
@@ -70,7 +70,7 @@ function EditModal({ showModal, handleClose, selectedDatas, handleUpdate }) {
     console.log("selectedDatas:", selectedDatas);
     formik.setValues({
         enqId: selectedDatas?.enqId?._id || '',
-        followUpDetails: selectedDatas?.followUpDetails || '',
+        orderDetails: selectedDatas?.orderDetails || '',
         nextContactDate: selectedDatas?.nextContactDate || '',
         status: selectedDatas?.status || '',
         remarks: selectedDatas?.remarks || '',
@@ -83,7 +83,7 @@ function EditModal({ showModal, handleClose, selectedDatas, handleUpdate }) {
     <ToastContainer autoClose={1000}/>
     <Modal show={showModal} onHide={handleModalHide} backdrop="static" centered>
       <Modal.Header closeButton>
-        <Modal.Title>Edit Follow-Up</Modal.Title>
+        <Modal.Title>Edit Orders</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Container>
@@ -120,7 +120,7 @@ function EditModal({ showModal, handleClose, selectedDatas, handleUpdate }) {
             </Col>
             <Col md={6}>
             <Form.Group className="mb-3" controlId="nextContactDate">
-            <Form.Label style={{ fontSize: '14px' }}>Next Follow-Up Schedule</Form.Label>
+            <Form.Label style={{ fontSize: '14px' }}>Next Order Schedule</Form.Label>
               <Form.Control
                 type="text"
                 name="nextContactDate"
@@ -138,17 +138,17 @@ function EditModal({ showModal, handleClose, selectedDatas, handleUpdate }) {
          
            <Row>
             <Col md={6}>
-            <Form.Group className="mb-3" controlId="followUpDetails">
-            <Form.Label style={{ fontSize: '14px' }}>FollowUp Details</Form.Label>
+            <Form.Group className="mb-3" controlId="orderDetails">
+            <Form.Label style={{ fontSize: '14px' }}>Order Details</Form.Label>
               <Form.Control
                 as="textarea"
-                name="followUpDetails"
-                value={formik.values.followUpDetails}
+                name="orderDetails"
+                value={formik.values.orderDetails}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
               />
-              {formik.touched.followUpDetails && formik.errors.followUpDetails ? (
-                <div className="error" style={{color:'red'}}>{formik.errors.followUpDetails}</div>
+              {formik.touched.orderDetails && formik.errors.orderDetails ? (
+                <div className="error" style={{color:'red'}}>{formik.errors.orderDetails}</div>
               ) : null}
             </Form.Group>
 </Col>

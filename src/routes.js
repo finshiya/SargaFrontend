@@ -64,7 +64,7 @@ const UserRoles = React.lazy(() => import("./page/Settings/UserRole/index"));
 const EnquiryManagement = React.lazy(() =>
   import("./page/EnquiryMangement/Index")
 );
-const FollowUp = React.lazy(() => import("./page/FollowUp/Index"));
+const FollowUp = React.lazy(() => import("./page/Orders/Index"));
 // const Licensee = React.lazy(() => import('./page/Licensee/index'))
 const MyTeam = React.lazy(() => import("./page/MyTeam/index"));
 const Payment = React.lazy(() => import("./page/Payment/index"));

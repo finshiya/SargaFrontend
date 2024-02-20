@@ -22,7 +22,7 @@
    width: 55%;
    justify-content: space-between;
 }
-.ciEzoQ {
+.hMFeQo {
     padding: 4px 24px 4px 24px !important;
     margin: 16px 0px 8px 0px; 
 }
@@ -38,7 +38,7 @@
 
 .btn-2{
     background-color: transparent !important;
-    color: #008eff85;
+ color: #3e3e3ec2;
     border: none;
   
 }
@@ -53,7 +53,7 @@
     color: #3eba43;
 }
 .btn-2:hover{
-    color: #008eff;
+    color: #070707;
 }
 .btn-3:hover{
     color: #f02222;
@@ -64,7 +64,7 @@
     background-color: #ffff;
     border-radius: 20px;
 }
-.dFwCCu{
+.evaFvq{
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     border-bottom: 1px solid #e8e8e8;
@@ -74,10 +74,11 @@
     padding-left: 27px !important;
 }
 
-.fNMiXs {
+.ceTAjv {
     font-weight: 600 !important;
     font-size: 18px !important;
     color: #0000009e !important;
+
 }
 .jmDgLz {
    border-bottom-left-radius: 20px;
@@ -178,7 +179,7 @@ text-transform: capitalize;
   }
   .table-light {
     --bs-table-color: #fff;
-    --bs-table-bg: #003366;
+    --bs-table-bg: #000000;
     font-size: 15px;
   }
   .table > :not(caption) > * > * {
@@ -237,7 +238,7 @@ text-transform: capitalize;
             box-shadow: 0px 0px 6px 3px rgb(0 0 0 / 7%);
             top: 55px;
             right: 20px;
-            background-color: rgb(252, 148, 148);
+            background-color: rgb(255, 255, 255);
             padding: 18px;
             z-index: 10;
         }
@@ -253,24 +254,12 @@ text-transform: capitalize;
         .right-div .nav-close-btn{
         position: absolute;
         top: 2rem;
-        right: 159px;
+        right: 31px;
         }
     
     }
+    
+    .form-control:focus {
 
-
-    .date-div{
-        background-color: rgb(255, 255, 255);
-        position: absolute;
-        top: 50px;
-        right: 0px;
-        z-index: 1000;
-        padding: 30px;
-        box-shadow: 0px 0px 6px 3px rgb(0 0 0 / 7%);
+        border-color: #898989 !important;
     }
-
-   .toggle-date-btn{
-    background: transparent;
-border: none;
-color: #949494;
-   }

@@ -1,0 +1,158 @@
+/*tab.css*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.custom-modal {
+    display: flex;
+    align-items: stretch;
+    height: 100%;
+  }
+ 
+
+  /* .modal-dialog {
+    width: 50%; 
+  } */
+  .modal-body {
+    flex: 1;
+    overflow-y: auto; 
+  }
+  /* .modal-header {
+    border: none;
+  } */
+
+  .box {
+    /* border: 1px solid #94cff1; */
+    width: 100%;
+    margin: auto;
+    margin-bottom: 30px;
+    border-radius: 8px;
+}
+  
+  .tabs {
+    display: flex;
+    justify-content: space-between;
+    width: 100%; /* Set the width to 100% to match the modal width */
+  }
+  
+  .tab {
+    flex: 1 1;
+    padding: 10px;
+    text-align: center;
+    border: none;
+    border-top: none;
+    cursor: pointer;
+    position: relative;
+    /* width: calc(33.33% - 2px); */
+    box-sizing: border-box;
+    /* font-weight: 600; */
+    color: #bcbcbc;
+    /* border: 1px solid #dee2e6; */
+    border-top: none;
+  }
+  
+
+  .active-tab {
+    /* border: none;
+    background: #94cff1;
+    color: white; */
+    /* border-bottom: 2px solid #000000; */
+    color: #000000;
+}
+
+.contents{
+    position: relative;
+}
+.content{
+    display: none;
+    position: relative;
+  
+}
+
+.active-content{
+    display: block;
+    margin-left:10px;
+    margin-right: 10px;
+    transition: all 1s ease-in-out;
+}
+/* Equal height for all content */ 
+.content {
+    flex: 1;
+    margin: 0;
+}
+
+.active-tab ::after{
+ 
+    content:'';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    background: initial;
+    animation: new 0.5s;
+}.radio-group {
+  display: flex; 
+  align-items: center; 
+}
+
+.radio-group .form-check {
+  margin-right: 20px; 
+}
+.error {
+  font-size: 14px;
+}
+
+
+.form-label {
+  font-size: 14px; 
+}
+
+.radio-group label {
+  font-size: 14px; 
+}
+
+/* Add this CSS to your Tab.css file or your component stylesheet */
+.select-container {
+  position: relative;
+}
+
+.select-arrow {
+  position: absolute;
+  top: 50%;
+  right: 10px; /* Adjust the distance from the right side as needed */
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.follow-up-table-row {
+  background-color: #f5f5f5 !important; 
+}
+
+
+
+
+
+.main-tab{
+  background-color: white;
+  width: 100%;
+  height: auto;
+ padding: 0;
+ border-radius: 20px;
+ color: #0000009e ;
+ border: 1px solid #e8e8e8;
+}
+.main-tab h5{
+  /* padding: 20px; */
+}
+.head-row{
+  display: flex;
+  justify-content: space-between;
+  margin: 0px 0px;
+  border-bottom: 1px solid #e8e8e8;
+  padding: 4px 23px;
+  align-items: center;
+}

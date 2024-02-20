@@ -43,8 +43,8 @@ import { useRef } from "react";
 
 function Table() {
   const [datas, setDatas] = useState([]);
-  const [selectedEnquiryId, setSelectedEnquiryId] = useState(null); //followUp
-  const [showFollowUpModal, setShowFollowUpModal] = useState(false); //followUp
+  const [selectedEnquiryId, setSelectedEnquiryId] = useState(null); 
+  const [showOrderModal, setShowOrderModal] = useState(false);
   const [search, setSearch] = useState("");
   const [filteredDatas, setFilteredDatas] = useState([]);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -53,13 +53,13 @@ function Table() {
   const [deleteModal, setDeleteModal] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [leadQuality, setLeadQuality] = useState(["High", "Medium", "Low"]);
-  const [followUpData, setFollowUpData] = useState([]); //flwup
+  const [orderData, setOrderData] = useState([]); //flwup
   const [filterValue, setFilterValue] = useState("");
   const [query, setQuery] = useState("");
   const navRef = useRef();
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  // const [showPaymentModal, setShowPaymentModal] = useState(false);
   // const [expandedRow, setExpandedRow] = useState(null);
 
   const showNavbar = () => {
@@ -82,9 +82,9 @@ function Table() {
 
   const getDatas = async () => {
     try {
-      const { enquiry } = (await axios.get("http://localhost:3000/enquiries"))
+      const { customer } = (await axios.get("http://localhost:3000/customers"))
         .data;
-      const filteredData = enquiry
+      const filteredData = customer
         .map(
           ({
             fName,
@@ -95,7 +95,7 @@ function Table() {
             state,
             leadQuality,
             remarks,
-            enqDescp,
+            custDescp,
             ...rest
           }) => ({
             ...rest,
@@ -107,7 +107,7 @@ function Table() {
             state: capitalize(state),
             leadQuality: capitalize(leadQuality),
             remarks: capitalize(remarks),
-            enqDescp: capitalize(enqDescp),
+            custDescp: capitalize(custDescp),
           })
         )
         .filter(
@@ -128,7 +128,7 @@ function Table() {
     try {
       console.log("Updating data:", orgId, updatedData);
       const response = await axios.put(
-        `http://localhost:3000/enquiries/${orgId}`,
+        `http://localhost:3000/customers/${orgId}`,
         updatedData
       );
 
@@ -168,14 +168,14 @@ function Table() {
     deleteModalShow();
   };
 
-  // Add a function to handle the FollowUp button click
-  const handleFollowUpClick = (enquiryId) => {
-    setSelectedEnquiryId(enquiryId);
-    setShowFollowUpModal(true);
+  // Add a function to handle the Order button click
+  const handleOrderClick = (enqId) => {
+    setSelectedEnquiryId(enqId);
+    setShowOrderModal(true);
   };
 
   const isExpandableRow = (row) => {
-    return Array.isArray(row.followUpData) && row.followUpData.length > 0;
+    return Array.isArray(row.orderData) && row.orderData.length > 0;
   };
 
   const totalCount = filteredDatas ? filteredDatas.length : 0;
@@ -240,11 +240,11 @@ function Table() {
 
             <OverlayTrigger
               placement="top"
-              overlay={<Tooltip id="tooltip-follow-up">Order</Tooltip>}
+              overlay={<Tooltip id="tooltip-order">Order</Tooltip>}
             >
               <Button
                 className="btn btn-2 me-3 ps-0"
-                onClick={() => handleFollowUpClick(row._id)}
+                onClick={() => handleOrderClick(row._id)}
               >
                 <FontAwesomeIcon icon={faBox} />
               </Button>
@@ -302,24 +302,24 @@ function Table() {
   const rowPreDisabled = (row) => row.disabled;
 
   const ExpandedComponent = ({ data }) => {
-    const [followUpData, setFollowUpData] = useState([]);
+    const [orderData, setOrderData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [showViewModal, setShowViewModal] = useState(false);
     const [selectedDatas, setSelectedDatas] = useState(null);
-    const [selectedData, setSelectedData] = useState(null);
+    // const [selectedData, setSelectedData] = useState(null);
 
     //  const [selectedId, setSelectedId] = useState(null);
-    const [followUpDataPresent, setFollowUpDataPresent] = useState(false);
+    const [orderDataPresent, setOrderDataPresent] = useState(false);
 
     useEffect(() => {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:3000/followUp/enqId/${data._id}`
+            `http://localhost:3000/orders/enqId/${data._id}`
           );
-          setFollowUpData(response.data.followUp);
+          setOrderData(response.data.orders);
         } catch (error) {
-          console.error("Error fetching follow-up data:", error);
+          console.error("Error fetching order data:", error);
         } finally {
           setLoading(false);
         }
@@ -332,12 +332,12 @@ function Table() {
       const fetchData = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:3000/followUp/enqTo/${data._id}`
+            `http://localhost:3000/orders/enqTo/${data._id}`
           );
-          setFollowUpData(response.data.followUp);
-          console.log("sarga", response.data.followUp);
+          setOrderData(response.data.orders);
+          console.log("sarga", response.data.orders);
         } catch (error) {
-          console.error("Error fetching follow-up data:", error);
+          console.error("Error fetching order data:", error);
         } finally {
           setLoading(false);
         }
@@ -347,10 +347,10 @@ function Table() {
     }, [data._id]);
 
     useEffect(() => {
-      setFollowUpDataPresent(followUpData.length > 0);
-    }, [followUpData]);
+      setOrderDataPresent(orderData.length > 0);
+  }, [orderData]);
 
-    if (followUpData.length === 0) {
+    if (orderData.length === 0) {
       return null;
     }
 
@@ -386,9 +386,9 @@ function Table() {
                 <CTableHeaderCell className="text-start ">
                   ORDER ID
                 </CTableHeaderCell>
-                <CTableHeaderCell className="text-start ">
+                {/* <CTableHeaderCell className="text-start ">
                   ENQUIRT TO
-                </CTableHeaderCell>
+                </CTableHeaderCell> */}
                 {/* <CTableHeaderCell className='text-start '>ORDER DETAILS</CTableHeaderCell> */}
                 <CTableHeaderCell className="text-start ">
                   DELIVERABLE DATE
@@ -405,22 +405,20 @@ function Table() {
               </CTableRow>
             </CTableHead>
             <CTableBody>
-              {followUpData.map((followUp, index) => (
+              {orderData.map((orders, index) => (
                 <CTableRow key={index} className="follow-up-table-row">
                   <CTableDataCell className="text-start">
-                    {capitalizeFirstLetter(followUp.OrderId)}
+                    {capitalizeFirstLetter(orders.OrderId)}
+                  </CTableDataCell>
+                
+                  <CTableDataCell className="text-start">
+                    {orders.nextContactDate}
                   </CTableDataCell>
                   <CTableDataCell className="text-start">
-                    {followUp.enqTo.name}
+                    {capitalizeFirstLetter(orders.remarks.substring(0, 13))}
                   </CTableDataCell>
                   <CTableDataCell className="text-start">
-                    {followUp.nextContactDate}
-                  </CTableDataCell>
-                  <CTableDataCell className="text-start">
-                    {capitalizeFirstLetter(followUp.remarks.substring(0, 13))}
-                  </CTableDataCell>
-                  <CTableDataCell className="text-start">
-                    {capitalizeFirstLetter(followUp.status.substring(0, 13))}
+                    {capitalizeFirstLetter(orders.status.substring(0, 13))}
                   </CTableDataCell>
                   <CTableDataCell className="text-start">
                     <div>
@@ -537,7 +535,7 @@ function Table() {
           }
           subHeaderAlign="right"
           expandableRows={(row) =>
-            row._id === selectedDatas?._id && row.followUpData?.length > 0
+            row._id === selectedDatas?._id && row.orderData?.length > 0
           }
           expandableRowsComponent={(props) => (
             <ExpandedComponent {...props} data={props.data} />
@@ -563,13 +561,15 @@ function Table() {
         id={selectedId}
         getDatas={getDatas}
       />
-      {showFollowUpModal && (
+      {showOrderModal && (
         <FollowUpModal
           selectedEnquiryId={selectedEnquiryId}
-          showFollowUpModal={showFollowUpModal}
-          setShowFollowUpModal={setShowFollowUpModal}
+          showOrderModal={showOrderModal}
+          setShowOrderModal={setShowOrderModal}
           getDatas={getDatas}
           enqId={selectedEnquiryId}
+
+       
         />
       )}{" "}
     </>

@@ -27,7 +27,7 @@ const DeleteModal = ({ getDatas, deleteclose, dlt, id }) => {
 
   const onDelete = (_id) => {
     const response = axios
-      .patch(`http://localhost:3000/enquiries/${_id}`)
+      .patch(`http://localhost:3000/customers/${_id}`)
       .then(() => {
         if (response.status === 200) {
           toast.success("Data successfully added", {
