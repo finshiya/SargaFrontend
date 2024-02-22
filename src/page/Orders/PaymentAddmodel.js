@@ -52,7 +52,7 @@ const PaymentExpandibleView = ({ showModal, handleClose, selectedData }) => {
         await validationSchema.validate(values, { abortEarly: false });
 
         const response = await axios.post(
-          "http://localhost:3000/collctions",
+          "http://localhost:3000/collections",
           values
         );
         console.log("Response:", response.data);

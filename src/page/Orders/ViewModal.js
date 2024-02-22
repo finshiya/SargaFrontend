@@ -8,6 +8,9 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
 
 function ViewModal({ showModal, handleClose, selectedDatas }) {
+  console.log("he", selectedDatas);
+
+  // console.log("findri1", selectedDatas);
   return (
     <Modal show={showModal} onHide={handleClose}  backdrop="static"  centered>
       <Modal.Header closeButton>
@@ -28,7 +31,7 @@ function ViewModal({ showModal, handleClose, selectedDatas }) {
          <Col md={6}>
               {/* <p className='view-label'>Next Contact Date</p>
               <p className='view-data'> {selectedDatas?.nextContactDate}</p> */}
-              <Form.Label style={{fontSize:'14px'}}> Next Contact Date</Form.Label>
+              <Form.Label style={{fontSize:'14px'}}> Next Deliverable Date</Form.Label>
               <Form.Control
                 rows={3}
                 disabled={true} 
@@ -38,19 +41,19 @@ function ViewModal({ showModal, handleClose, selectedDatas }) {
             </Col>
 
          <Col md={6}>
-           <Form.Label style={{fontSize:'14px'}}> Follow-Up Details</Form.Label>
+           <Form.Label style={{fontSize:'14px'}}> Order Details</Form.Label>
               <Form.Control
                as="textarea"
                 rows={3}
                 disabled={true} 
-                value={`${selectedDatas?.followUpDetails || ''}`}
+                value={`${selectedDatas?.orderDetails || ''}`}
                 className='custom-disabled-input'
               />
          </Col>
          <Col md={6}>
               {/* <p className='view-label'>Remarks</p>
               <p className='view-data'> {selectedDatas?.remarks}</p> */}
-              <Form.Label style={{fontSize:'14px'}}> Follow-Up Details</Form.Label>
+              <Form.Label style={{fontSize:'14px'}}> Remarks</Form.Label>
               <Form.Control
                as="textarea"
                 rows={3}

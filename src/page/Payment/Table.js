@@ -40,7 +40,7 @@ function Table() {
 //   };
 const fetchPayments = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/collctions');
+      const response = await axios.get('http://localhost:3000/collections');
       setDatas(response.data.Payments);
       setFilteredDatas(response.data.Payments);
     } catch (error) {
@@ -217,9 +217,12 @@ const fetchPayments = async () => {
           subHeader
           subHeaderComponent={
             <div className="table-top">
-              <div className="left-div">
+               <div className="left-div">
+              <div>
+         
+                </div>
                 <div className="search-input-container">
-                  <FontAwesomeIcon icon={faSearch} className="search-icon" />
+                  <FontAwesomeIcon icon={faSearch} className="search-icon mt-1" />
                   <input
                     type="text"
                     placeholder="Search"

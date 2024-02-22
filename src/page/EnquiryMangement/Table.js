@@ -62,6 +62,9 @@ function Table() {
   // const [showPaymentModal, setShowPaymentModal] = useState(false);
   // const [expandedRow, setExpandedRow] = useState(null);
 
+
+
+
   const showNavbar = () => {
     navRef.current.classList.toggle("responsive_nav");
   };
@@ -71,7 +74,6 @@ function Table() {
     setShowViewModal(false);
     setSelectedDatas(null);
   };
-
   // useEffect(()=>{
 
   //   OverlayTrigger, Tooltip
@@ -202,53 +204,54 @@ function Table() {
       cell: (row) => (
         <>
           <div>
-            <OverlayTrigger
+            
+            {/* <OverlayTrigger
               placement="top"
               overlay={<Tooltip id="tooltip-view">View Details</Tooltip>}
-            >
+            > */}
               <Button
                 className="btn btn-2 me-3 ps-0"
                 onClick={() => handleViewDetails(row)}
               >
                 <FontAwesomeIcon icon={faEye} />
               </Button>
-            </OverlayTrigger>
+            {/* </OverlayTrigger> */}
 
-            <OverlayTrigger
+            {/* <OverlayTrigger
               placement="top"
               overlay={<Tooltip id="tooltip-edit">Edit</Tooltip>}
-            >
+            > */}
               <Button
                 className="btn btn-1 me-3 ps-0"
                 onClick={() => handleEdit(row)}
               >
                 <FontAwesomeIcon icon={faEdit} />
               </Button>
-            </OverlayTrigger>
+            {/* </OverlayTrigger> */}
 
-            <OverlayTrigger
+            {/* <OverlayTrigger
               placement="top"
               overlay={<Tooltip id="tooltip-delete">Delete</Tooltip>}
-            >
+            > */}
               <Button
                 className="btn btn-3 me-3 ps-0"
                 onClick={() => handleClickDelete(row)}
               >
                 <FontAwesomeIcon icon={faTrash} />
               </Button>
-            </OverlayTrigger>
+            {/* </OverlayTrigger> */}
 
-            <OverlayTrigger
+            {/* <OverlayTrigger
               placement="top"
               overlay={<Tooltip id="tooltip-order">Order</Tooltip>}
-            >
+            > */}
               <Button
                 className="btn btn-2 me-3 ps-0"
                 onClick={() => handleOrderClick(row._id)}
               >
                 <FontAwesomeIcon icon={faBox} />
               </Button>
-            </OverlayTrigger>
+            {/* </OverlayTrigger> */}
           </div>
         </>
       ),
@@ -361,7 +364,7 @@ function Table() {
 
     const handleClose = () => {
       setShowViewModal(false);
-      setShowPaymentModal(false);
+      // setShowPaymentModal(false);
       setSelectedDatas(null);
     };
 
@@ -383,9 +386,13 @@ function Table() {
           <CTable align="middle" className="mb-0 border" hover responsive>
             <CTableHead color="light">
               <CTableRow>
-                <CTableHeaderCell className="text-start ">
+                  <CTableHeaderCell className="text-start ">
                   ORDER ID
                 </CTableHeaderCell>
+                <CTableHeaderCell className="text-start ">
+                 PRODUCT NAME
+                </CTableHeaderCell>
+              
                 {/* <CTableHeaderCell className="text-start ">
                   ENQUIRT TO
                 </CTableHeaderCell> */}
@@ -409,6 +416,10 @@ function Table() {
                 <CTableRow key={index} className="follow-up-table-row">
                   <CTableDataCell className="text-start">
                     {capitalizeFirstLetter(orders.OrderId)}
+                  </CTableDataCell>
+                
+                  <CTableDataCell className="text-start">
+                    {capitalizeFirstLetter(orders.enqTo.name)}
                   </CTableDataCell>
                 
                   <CTableDataCell className="text-start">

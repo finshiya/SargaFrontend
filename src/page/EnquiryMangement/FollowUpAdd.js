@@ -44,9 +44,9 @@ function AddModal({
 
   // Validation schema using Yup
   const validationSchema = Yup.object({
-    enqId: Yup.string().required("enqId is required"),
-    followUpDetails: Yup.string().required("order are required"),
-    nextContactDate: Yup.string().required("Next Delivarable is required"),
+    enqId: Yup.string().required("EnqId is required"),
+    orderDetails: Yup.string().required("Order are required"),
+    nextContactDate: Yup.string().required("Next Deliverable is required"),
     // remarks:Yup.string().required('Remarks are required'),
     // enqTo: Yup.string().required('Enquiry To is required'),
   });
@@ -54,7 +54,7 @@ function AddModal({
   const formik = useFormik({
     initialValues: {
       enqId: enqId || "",
-      followUpDetails: "",
+      orderDetails: "",
       nextContactDate: "",
       status: "new",
       // enqTo: '',
@@ -72,31 +72,33 @@ function AddModal({
       try {
         // Validate the newItem object using Formik and Yup
         await validationSchema.validate(values, { abortEarly: false });
-
+    
         const response = await axios.post(
-          "http://localhost:3000/orders",
-          values
+            "http://localhost:3000/orders",
+            values
         );
         console.log("Response:", response.data);
-
+    
         getDatas();
         toast.success("Data Added successfully!", { autoClose: 1000 });
-
+    
         handleClose();
-      } catch (error) {
+    } catch (error) {
         if (error.response) {
-          console.log("Error Response:", error.response.data);
-          console.log("Status Code:", error.response.status);
+            console.log("Error Response:", error.response.data);
+            console.log("Status Code:", error.response.status);
         } else if (error.request) {
-          console.log("No response received from the server.");
+            console.log("No response received from the server.");
         } else {
-          console.log("Error:", error.message);
-          toast.error("Error creating data Please try again.", {
-            autoClose: 1000,
-          });
+            console.log("Error:", error.message);
+            toast.error("Error creating data Please try again.", {
+                autoClose: 1000,
+            });
         }
-      }
+    }
     },
+
+    
   });
 
   const fetchEnquiryTo = async () => {
@@ -206,7 +208,7 @@ function AddModal({
                   </Form.Group>
                 </Col>
                 <Col md={6}>
-                  <Form.Group className="mb-3" controlId="followUpDetails">
+                  <Form.Group className="mb-3" controlId="orderDetails">
                     <Form.Label
                       className="mandatory-label"
                       style={{ fontSize: "14px" }}
@@ -215,16 +217,16 @@ function AddModal({
                     </Form.Label>
                     <Form.Control
                       as="textarea"
-                      name="followUpDetails"
+                      name="orderDetails"
                       placeholder="Details"
-                      value={formik.values.followUpDetails}
+                      value={formik.values.orderDetails}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                     />
-                    {formik.touched.followUpDetails &&
-                    formik.errors.followUpDetails ? (
+                    {formik.touched.orderDetails &&
+                    formik.errors.orderDetails ? (
                       <div className="error" style={{ color: "red" }}>
-                        {formik.errors.followUpDetails}
+                        {formik.errors.orderDetails}
                       </div>
                     ) : null}
                   </Form.Group>
