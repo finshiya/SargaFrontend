@@ -44,7 +44,7 @@ function AddModal({
 
   // Validation schema using Yup
   const validationSchema = Yup.object({
-    enqId: Yup.string().required("EnqId is required"),
+    // enqId: Yup.string().required("EnqId is required"),
     orderDetails: Yup.string().required("Order are required"),
     nextContactDate: Yup.string().required("Next Deliverable is required"),
     // remarks:Yup.string().required('Remarks are required'),
@@ -57,6 +57,7 @@ function AddModal({
       orderDetails: "",
       nextContactDate: "",
       status: "new",
+      enqTo: "",
       // enqTo: '',
 
       // remarks:'',

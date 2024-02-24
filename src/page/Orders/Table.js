@@ -1,6 +1,5 @@
 
 
-
 import React, { useState, useEffect } from "react";
 import Datatable from "react-data-table-component";
 import axios from "axios";
@@ -10,12 +9,20 @@ import Button from "react-bootstrap/Button";
 import "../style/table.css";
 import Filter from "./Filter";
 import Dropdown from "react-bootstrap/Dropdown";
-import AllocationModal from "./AllocationAdd";
+import AllocationModal from "./allocation/AllocationAdd";
 import PaymentExpandibleView from "./PaymentAddmodel";
+import PaymentDetailsModal from "./PaymentAddmodel"; 
 
 // Import necessary FontAwesome components
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import {
+  CTable,
+  CTableBody,
+  CTableDataCell,
+  CTableHead,
+  CTableHeaderCell,
+  CTableRow,
+} from "@coreui/react";
 import {
   faEllipsisV,
   faEdit,
@@ -35,6 +42,8 @@ import { FaBars, FaTimes } from "react-icons/fa";
 import { useRef } from "react";
 
 function Table() {
+  const [showOrderModal, setShowOrderModal] = useState(false);
+
   const [showAllocationModal, setShowAllocationModal] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [datas, setDatas] = useState([]);
@@ -47,20 +56,24 @@ function Table() {
   const [selectedId, setSelectedId] = useState(null);
   const [filterValue, setFilterValue] = useState("");
   const [query, setQuery] = useState("");
-  const navRef = useRef();
-  const showNavbar = () => {
-    navRef.current.classList.toggle("responsive_nav");
-  };
+  const [navRef, setNavRef] = useState(useRef()); // Store navRef in state
+  const [showNavbar, setShowNavbar] = useState(false); // Add state for showing/hiding navbar
+  const [selectedEnquiryId, setSelectedEnquiryId] = useState(null);
 
   const handleClickAllocate = (row) => {
     setShowAllocationModal(true);
   };
+
+    // Add a function to handle the Order button click
+    const handleOrderClick = (enqId) => {
+      setSelectedEnquiryId(enqId);
+      setShowOrderModal(true);
+    };
+
   const handleClickPayment = () => {
     setSelectedDatas();
     paymentModalShow();
   };
-
-
 
   const paymentModalShow = () => {
     setShowPaymentModal(true);
@@ -77,6 +90,7 @@ function Table() {
     try {
       const response = await axios.get("http://localhost:3000/orders");
       setDatas(response.data.orders);
+ 
       setFilteredDatas(response.data.orders);
     } catch (error) {
       console.error(error);
@@ -122,15 +136,10 @@ function Table() {
     setSelectedId(row._id);
     deleteModalShow();
   };
+
   const totalCount = filteredDatas.length;
 
   const columns = [
-    // {
-    //   name: "CUST ID",
-    //   selector: (row) =><div>{row.enqId ? `${row.enqId.enqNo}` :''}</div>,
-    //   sortable: true,
-    // },
-
     {
       name: "ORD ID",
       selector: (row) => <div>{`${row.OrderId}`}</div>,
@@ -145,7 +154,6 @@ function Table() {
       ),
       sortable: true,
     },
-
     {
       name: "CONTACT DATE",
       selector: (row) => {
@@ -162,16 +170,12 @@ function Table() {
         );
       },
     },
-    // {
-    //   name: "STATUS",
-    //   selector: (row) => <div style={{ textTransform: 'capitalize' }}>{row.status}</div> ,
-    // },
     {
       name: "ACTIONS",
       cell: (row) => (
         <>
-          <div style={{display:"flex"}}>
-          <Button
+          <div style={{ display: "flex" }}>
+            <Button
               className="btn btn-4 me-3 ps-0"
               onClick={() => handleClickAllocate(row)}
             >
@@ -184,25 +188,30 @@ function Table() {
             >
               <FontAwesomeIcon icon={faMoneyCheckDollar} />
             </Button>
-            <Dropdown style={{padding:"0px 20px 0px 0px"}}>
-              <Dropdown.Toggle  m-5 style={{background:"none", border: "none",paddingLeft:'0'}}>
-                <FontAwesomeIcon icon={faEllipsisV} className="btn-2"/>
-                 {/* Plus Icon */}
-              </Dropdown.Toggle >
-              <Dropdown.Menu  style={{zIndex:"1000"}}>
+            <Dropdown style={{ padding: "0px 20px 0px 0px" }}>
+              <Dropdown.Toggle
+                m-5
+                style={{
+                  background: "none",
+                  border: "none",
+                  paddingLeft: "0",
+                }}
+              >
+                <FontAwesomeIcon icon={faEllipsisV} className="btn-2" />
+                {/* Plus Icon */}
+              </Dropdown.Toggle>
+              <Dropdown.Menu style={{ zIndex: "1000" }}>
                 <Dropdown.Item onClick={() => handleViewDetails(row)}>
-                  <FontAwesomeIcon icon={faEye} className="btn-2"/> View
+                  <FontAwesomeIcon icon={faEye} className="btn-2" /> View
                 </Dropdown.Item>
                 <Dropdown.Item onClick={() => handleEdit(row)}>
-                  <FontAwesomeIcon icon={faEdit} className="btn-1"/> Edit
+                  <FontAwesomeIcon icon={faEdit} className="btn-1" /> Edit
                 </Dropdown.Item>
                 <Dropdown.Item onClick={() => handleClickDelete(row)}>
-                  <FontAwesomeIcon icon={faTrash}className="btn-3" /> Delete
+                  <FontAwesomeIcon icon={faTrash} className="btn-3" /> Delete
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
-
-          
           </div>
         </>
       ),
@@ -226,8 +235,6 @@ function Table() {
         (item.nextContactDate &&
           item.nextContactDate.toString().includes(search));
 
-      //   const nextContactDateMatch = item.nextContactDate.toLowerCase().includes(search.toLowerCase());
-
       const statusMatch = item.status
         .toLowerCase()
         .includes(filterValue.toLowerCase());
@@ -239,58 +246,125 @@ function Table() {
 
   const rowPreDisabled = (row) => row.disabled;
 
-  const ExpandedComponent = ({ data }) => {
-    const [payments, setPayments] = useState([]);
-    const [loading, setLoading] = useState(true);
 
+  const ExpandedComponent = ({ data }) => {
+    const [orderData, setOrderData] = useState([]);
+    const [loading, setLoading] = useState(true);
+  
     useEffect(() => {
-      const fetchPayments = async () => {
+      const fetchData = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:3000/collctions/orders/${data._id}`
+            `http://localhost:3000/collections/orders/${data._id}`
           );
-          setPayments(response.data.payments);
+          setOrderData(response.data.payment);
+          console.log("2st", response.data);
         } catch (error) {
-          console.error("Error fetching payments:", error);
+          console.error("Error fetching order data:", error);
         } finally {
           setLoading(false);
         }
       };
-
-      fetchPayments();
+      fetchData();
     }, [data._id]);
-
+  
     if (loading) {
-      return <div>Loading payments...</div>;
+      return <div>Loading order data...</div>;
+    }
+    // Check if orderData is an array
+    if ( !Array.isArray(orderData) || orderData.length === 0) {
+      return <div  style={{ textAlign: 'center', padding: "10px" }}> No collection orders available for this item.</div>;
     }
 
-    if (payments.length === 0) {
-      return <div>No payments found for this order.</div>;
+    function capitalizeFirstLetter(str) {
+      if (!str) return ""; // Handle null, undefined, and empty string cases
+      return str.charAt(0).toUpperCase() + str.slice(1);
     }
-
+  
     return (
-      <div className="payment-table">
-        <table>
-          <thead>
-            <tr>
-              <th>Payment Amount</th>
-              <th>Payment Method</th>
-              <th>Transaction ID</th>
-            </tr>
-          </thead>
-          <tbody>
-            {payments.map((payment, index) => (
-              <tr key={index}>
-                <td>{payment.paymentAmount}</td>
-                <td>{payment.paymentMethod}</td>
-                <td>{payment.transactionId}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <>
+      <div
+        className="view-exp-modal"
+        style={{ margin: "20px", padding: "20px" }}
+      >
+        <CTable align="middle" className="mb-0 border" hover responsive>
+          <CTableHead color="light">
+            <CTableRow>
+              <CTableHeaderCell className="text-start ">
+              RCPT ID
+              </CTableHeaderCell>
+              <CTableHeaderCell className="text-start ">
+                ORDER ID
+              </CTableHeaderCell>
+
+              {/* <CTableHeaderCell className="text-start ">
+                ENQUIRT TO
+              </CTableHeaderCell> */}
+              {/* <CTableHeaderCell className='text-start '>ORDER DETAILS</CTableHeaderCell> */}
+              <CTableHeaderCell className="text-start ">
+             PMT AMOUNT 
+              </CTableHeaderCell>
+              <CTableHeaderCell className="text-start ">
+              PMT METHOD
+              </CTableHeaderCell>
+              <CTableHeaderCell className="text-start ">
+              TXID
+              </CTableHeaderCell>
+              <CTableHeaderCell className="text-start ">
+                ACTION
+              </CTableHeaderCell>
+            </CTableRow>
+          </CTableHead>
+          <CTableBody>
+              {orderData.map((order, index) => (
+                <CTableRow key={index} className="follow-up-table-row">
+                  <CTableDataCell className="text-start">
+                    {order.recieptId ? capitalizeFirstLetter(order.recieptId) : ""}
+                  </CTableDataCell>
+                  {/* Check if enqTo exists before accessing its properties */}
+                  <CTableDataCell className="text-start">
+                    {order.orders.OrderId ? capitalizeFirstLetter(order.orders.OrderId) : ""}
+                  </CTableDataCell>
+                  <CTableDataCell className="text-start">
+                    {order.paymentAmount}
+                  </CTableDataCell>
+                  <CTableDataCell className="text-start">
+                    {/* Check if remarks exists before accessing its properties */}
+                    {order.paymentMethod
+                      ? capitalizeFirstLetter(order.paymentMethod.substring(0, 13))
+                      : ""}
+                  </CTableDataCell>
+                  <CTableDataCell className="text-start">
+                    {/* Check if status exists before accessing its properties */}
+                    {order.transactionId
+                      ? capitalizeFirstLetter(order.transactionId.substring(0, 13))
+                      : ""}
+                  </CTableDataCell>
+                  <CTableDataCell className="text-start">
+                    <div>
+                      <FontAwesomeIcon
+                        icon={faEye}
+                        style={{ color: "#6c6c6c", cursor: "pointer" }}
+                        onClick={() => handleClickView()}
+                      />
+                    </div>
+                  </CTableDataCell>
+                </CTableRow>
+              ))}
+            </CTableBody>
+        </CTable>
+
+        {/* <ViewExpModal
+          showModal={showViewModal}
+          handleClose={handleClose}
+          selectedDatas={selectedDatas}
+        /> */}
+       </div>
+    </>
+    
     );
   };
+  
 
   return (
     <>
@@ -298,7 +372,6 @@ function Table() {
       <div className="table-div" style={{ border: "none" }}>
         <Datatable
           className="table-data-div"
-          // title='Orders'
           columns={columns}
           data={filteredDatas}
           pagination
@@ -310,14 +383,15 @@ function Table() {
           selectableRowsHighlight
           highlightOnHover
           subHeader
+          subHeaderAlign="right"
           subHeaderComponent={
             <div className="table-top">
               <div className="left-div">
-              <div>
-         
-                </div>
                 <div className="search-input-container">
-                  <FontAwesomeIcon icon={faSearch} className="search-icon mt-1" />
+                  <FontAwesomeIcon
+                    icon={faSearch}
+                    className="search-icon mt-1"
+                  />
                   <input
                     type="text"
                     placeholder="Search"
@@ -338,7 +412,6 @@ function Table() {
                     <span> Results: {totalCount}</span>
                   </div>
                   <div>
-                    {/* <FilterDropdown datas={datas} setFilteredDatas={setFilteredDatas} roleOptions={roleOptions} /> */}
                     <Filter
                       onFilter={(newQuery, newFilterValue) => {
                         setQuery(newQuery);
@@ -347,18 +420,23 @@ function Table() {
                     />
                   </div>
                 </div>
-                <button className="nav-btn nav-close-btn" onClick={showNavbar}>
+                <button
+                  className="nav-btn nav-close-btn"
+                  onClick={() => setShowNavbar(false)} // Close navbar on button click
+                >
                   <FaTimes />
                 </button>
               </div>
-              <button className="nav-btn" onClick={showNavbar}>
+              <button
+                className="nav-btn"
+                onClick={() => setShowNavbar(!showNavbar)} // Toggle navbar on button click
+              >
                 <FaBars />
               </button>
             </div>
           }
-          subHeaderAlign="right"
           expandableRows={(row) =>
-            row._id === selectedDatas?._id && row.payments?.length > 0
+            row._id === selectedDatas?._id && row.orderData?.length > 0
           }
           expandableRowsComponent={(props) => (
             <ExpandedComponent {...props} data={props.data} />
@@ -394,9 +472,18 @@ function Table() {
         show={showAllocationModal}
         handleClose={() => setShowAllocationModal(false)}
       />
+      {/* Payment Details Modal */}
+      <PaymentDetailsModal
+        showModal={showPaymentModal}
+        handleClose={handleClose}
+        selectedData={selectedDatas}
+  
+      />
+ 
     </>
   );
 }
 
 export default Table;
+
 

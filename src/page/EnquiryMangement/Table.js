@@ -266,6 +266,8 @@ function Table() {
 
     const result = datas.filter((item) => {
       const nameMatch =
+      (item.enqNo &&
+        item.enqNo.toLowerCase().includes(search.toLowerCase())) ||
         (item.fName &&
           item.fName.toLowerCase().includes(search.toLowerCase())) ||
         (item.lName &&
@@ -390,7 +392,7 @@ function Table() {
                   ORDER ID
                 </CTableHeaderCell>
                 <CTableHeaderCell className="text-start ">
-                 PRODUCT NAME
+                 ENQUIRY TO
                 </CTableHeaderCell>
               
                 {/* <CTableHeaderCell className="text-start ">
@@ -426,7 +428,7 @@ function Table() {
                     {orders.nextContactDate}
                   </CTableDataCell>
                   <CTableDataCell className="text-start">
-                    {capitalizeFirstLetter(orders.remarks.substring(0, 13))}
+                    {capitalizeFirstLetter(orders.remarks.substring(0, 13))}...
                   </CTableDataCell>
                   <CTableDataCell className="text-start">
                     {capitalizeFirstLetter(orders.status.substring(0, 13))}

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import "./Tab.css";
 import Table from "./Table";
-import AllocationTable from "./AllocationTable";
+import AllocationTable from "./allocation/AllocationTable";
 
 export default function MainTab() {
   const [toggle, setToggle] = useState(1);
@@ -15,11 +15,12 @@ export default function MainTab() {
     <Container className="main-tab">
       <Row className="head-row">
         <Col md={2} className="p-0">
-          <h5 className="m-0"> </h5>
+          <h5 className="m-0">Orders </h5>
         </Col>
 
         <Col md={6} className="p-0">
           <Row>
+            <Col md={4}></Col>
             <Col md={4}>
               <div
                 onClick={() => toggleTab(1)}

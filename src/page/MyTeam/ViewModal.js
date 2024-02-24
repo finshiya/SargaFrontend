@@ -88,7 +88,7 @@ function ViewModal({ showModal, handleClose, selectedDatas }) {
         
       </Modal.Body>
       <Modal.Footer>
-        <Button style={{ background: 'none', color: '#5bb6ea', border: '1px solid #5bb6ea' }} onClick={handleClose}>
+        <Button style={{ background: 'none', color: '#000000', border: '1px solid #000000' }} onClick={handleClose}>
           Close
         </Button>
       </Modal.Footer>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import avatar from '../../assets/images/profile.png';
+import avatar from '../../assets/images/prf-logo.png';
 import {
   CAvatar,
   CDropdown,

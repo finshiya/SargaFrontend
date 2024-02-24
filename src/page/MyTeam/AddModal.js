@@ -313,10 +313,10 @@ const App = ({getDatas, fetchUserRoles}) => {
           </Container>
         </Modal.Body>
         <Modal.Footer>
-          <Button style={{ background: 'none', color: '#5bb6ea', border: '1px solid #5bb6ea' }} onClick={handleClose}>
+          <Button style={{ background: 'none', color: '#000000', border: '1px solid #000000' }} onClick={handleClose}>
             Close
           </Button>
-          <Button style={{ background: '#5bb6ea', border: 'none', fontWeight: '600' }} onClick={formik.submitForm}>
+          <Button style={{ background: '#000000', border: 'none', fontWeight: '600' }} onClick={formik.submitForm}>
             Submit
           </Button>
         </Modal.Footer>

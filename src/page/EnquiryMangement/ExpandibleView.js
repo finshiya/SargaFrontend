@@ -5,12 +5,11 @@ import "./../style/view.css";
 import "./style/Tab.css";
 
 function ExpandedView({ showModal, handleClose, selectedDatas }) {
+  console.log("selectedDatas:", selectedDatas);
   const [paymentDetails, setPaymentDetails] = useState([]);
   const [toggle, setToggle] = useState(1);
+
   
- 
-
-
 
   const capitalizeFirstLetter = (value) => {
     return value
@@ -28,12 +27,13 @@ function ExpandedView({ showModal, handleClose, selectedDatas }) {
     <>
       <Modal show={showModal} onHide={handleClose} backdrop="static" centered>
         <Modal.Header closeButton>
-          <Modal.Title>Order Details1</Modal.Title>
+          <Modal.Title>Order Details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Container>
             <Row>
-           
+       
+          
             </Row>
             <div className="contents">
               <div
@@ -49,9 +49,8 @@ function ExpandedView({ showModal, handleClose, selectedDatas }) {
                     <Form.Control
                       disabled={true}
                       value={capitalizeFirstLetter(
-                        `${selectedDatas?.enqNo || ""}`
+                        `${selectedDatas?.OrderId || ""}`
                       )}
- 
                       className="custom-disabled-input"
                     />
                   </Col>
@@ -62,7 +61,7 @@ function ExpandedView({ showModal, handleClose, selectedDatas }) {
                     <Form.Control
                       disabled={true}
                       value={capitalizeFirstLetter(
-                        `${selectedDatas?.orderDetails || ""}`
+                        `${selectedDatas?.followUpDetails || ""}`
                       )}
                       className="custom-disabled-input"
                     />
@@ -91,8 +90,7 @@ function ExpandedView({ showModal, handleClose, selectedDatas }) {
                   </Col>
                 </Row>
               </div>
-     
-            </div>
+                </div>
           </Container>
         </Modal.Body>
         <Modal.Footer>
@@ -113,3 +111,4 @@ function ExpandedView({ showModal, handleClose, selectedDatas }) {
 }
 
 export default ExpandedView;
+
